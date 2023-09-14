@@ -61,7 +61,7 @@ I'm sure that some brands will be interested in this project and will be ready t
 
 ## 2. What to do for the first version?
 
-Find one partner and one model of this brand to start building my model. <br>
+Find one partner and one sneaker model of this brand to start building my model. <br>
 Build the model, train it, and test it. Make the AI search in the whole Instagram database (the most time-consuming step). <br> 
 Build a short application and connect it to the AI. <br>
 
