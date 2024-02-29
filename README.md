@@ -1,40 +1,42 @@
-# Outfinder-ALGOSUP
+# Project Name
 
-Here is the repository dedicated to **Quentin CLÉMENT**'s moonshot project in **ALGOSUP**. <br>
-The name of the project is **Outfinder**. <hr>
-For my scholarship, I have to develop a project in 5 years to improve my skills in computer science but also to show my future level at the end of this project. <br>
+> 🚧 **This project is heavily under construction!** 🚧 \
+> As excited as you may be, I don't recommend you to use the app for now. Nevertheless if you wish to contribute, you are welcome to do so by opening an issue or a pull request or even to [contact me](#contact) directly.
 
-## 1. What is Outfinder?
+**Project Name** has been thought of as a tool to correct your gestures when doing strength-training or body-building. The objectives are to:
 
-Outfinder is an application. It is divided into two parts: <br>
-- The first part is a mobile application. <br> 
-- The second part is an AI that will be included in the mobile application and connected to Instagram.<br> 
+- 💪 Optimize muscle activation
+- 🤕 Prevent injuries
+- 🚀 Rocket your progresses 
 
-As you can guess from the name of the project, the application is about finding outfits. To be precise, it is about finding outfits that match the user's sneakers. 
 
-How the application works will be divided into multiple steps:
-- First, the user will enter the brand and the model of his sneakers in the application. <br>
-- Secondly, the AI will search in Instagram the photos where these sneakers appear. <br>
-- Thirdly, a second AI will search in these photos the references to the clothes in each photo. <br>
-- Finally, the application will return to the user the photos where his sneakers appear and the references to the clothes found in them. <br>
-- Optionally, the user will be able to directly go to the website of the clothes found in the photos. <br>
+<!-- | Image | Name | Role | Contact |
+| --- | --- | --- | --- |
+| <img src="./documents/images/quentin.png" width="150" height="150"> | Quentin CLÉMENT | Project Owner | [GitHub](https://github.com/Quentin-Clement) \| [LinkedIn](https://www.linkedin.com/in/quentin-clément-939110221/) |
+| <img src="./documents/images/algosup.png" width="150" height="150"> | ALGOSUP | Collaborators/Client | [Website](https://www.algosup.com/) \| [LinkedIn](https://www.linkedin.com/company/algosup/) | -->
 
-## 2. The application development
+## Technologies used
 
-The application development in itself seems to be the easiest part of this project, it's a field I really enjoy and I have a little experience in it (I expect to have a lot more experience in 5 years by doing other web projects with the school). <br>
+**Project Name** is a mix of 2 main technologies: 
+- <img src="./documents/images/logos/swift-logo.svg" alt="Icon" style="width: 20px; height: 20px; vertical-align: middle;"> Swift for the front-end and back-end of the app (*meaning that it is currently only avaible on IOS*).
+- <img src="./documents/images/logos/python-logo.png" alt="Icon" style="width: 20px; height: 20px; vertical-align: middle;"> Python 3 and  <img src="./documents/images/logos/tensorflow-logo.png" alt="Icon" style="width: 20px; height: 20px; vertical-align: middle;"> TensorFlow for the machine learning part.
 
-Then, the design of the website is not something I care about at the moment but it will be REALLY important if I want to bring users to the application. Design is not something I'm good at but I have contacts in this field and they will help me to choose the best design for the application to make it as attractive and user-friendly as possible. <br>
+## Contact
 
-Another point is the hosting of the application. It is something I am more apprehensive about because I didn't work on it yet. That's something I expect to work on in the school during the rest of my scholarship and if it's not the case I will have to work on it by myself. <br>
+If for any reason you need to contact me, you can do so via [GitHub](https://github.com/Quentin-Clement), [LinkedIn](https://www.linkedin.com/in/quentin-clément-939110221/) or by email at: quentin.clement@algosup.com
 
-At last, I will have to care about the security part of the application. I will have to make sure that the user's data is safe and that the user can't access the data of other users. It's the most important part of the development of the application so I will have to be very cautious to avoid any security breach. I will test the security as much as possible but also ask people to test it and try to break it. <br>
+## Important Links and Docs
 
-## 3. The AI development
+A documentation will be implemented as soon as possible. For now, you can find information in the following documents:
+- [Project Charter](./documents/project-charter.md)
+- [Functional Specifications](./documents/functional-specifications.md)
+- [Technical Specifications](./documents/technical-specifications.md)
 
-### a. The sneakers recognition
+## Contributors
 
-AI development is the most important part of the project. It is the part that will make the difference between a good project and a great project. <br>
+<a href="https://github.com/Quentin-Clement"><img src="./documents/images/contributors/quentin.png" alt="Quentin's GitHub" style="width:50px;height:50px;"></a> <a href="https://github.com/algosup"><img src="./documents/images/contributors/algosup.png" alt="Quentin's GitHub" style="width:50px;height:50px;"></a> 
 
+<<<<<<< Updated upstream
 AI is a very complex field and I don't have a lot of experience in it. I will have to create my model from scratch and I will have to work on it for a long time. I will train it with as much data as possible (this data will be Instagram photos that I will have to collect and filter myself). I will then have to test it and either improve it by modifying the model or by adding more training data. <br>
 
 To provide the user with the best experience possible, I will have to make the AI search in the Instagram database for each sneaker. When the user enters his model in the application, it will return the result of the search that is been made before by the AI Searching in the whole Instagram database is a very long process I can't do with my computer, I will have to pay for other computers to do it. <br>
@@ -77,3 +79,5 @@ In my opinion, there are three main challenges to overcome: <br>
 The goal of this project is to start from a little audience and by using the feedback of the users on the first version, improve the application and contact more partners to add their products to the application, bring more users with these new products, and so on. <br>
 It's a complete project that mixes different fields such as web development, design, AI, business, and marketing. <br>
 I wish to extend my knowledge and my network by making a project I really enjoy and that I'm passionate about. <br>
+=======
+>>>>>>> Stashed changes
