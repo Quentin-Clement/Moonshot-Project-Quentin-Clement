@@ -123,115 +123,20 @@ Provide detailed descriptions of typical users, including demographics, goals, c
 
 ### 2.2 Use Cases
 
-1. **User Registration**
-   - **Description:** A new user registers for the LiftGuard application.
-   - **Actors:** User
-   - **Preconditions:** The user has downloaded and installed the LiftGuard application.
-   - **Flow:**
-     1. User opens the LiftGuard app.
-     2. User navigates to the registration page.
-     3. User enters personal details (name, email, password).
-     4. User completes the registration form and submits.
-     5. System sends a confirmation email to the user.
-     6. User clicks on the confirmation link in the email to activate their account.
-   - **Postconditions:** User account is created and activated.
+| **Use Case**            | **Description**                                              | **Actors** | **Preconditions**                                                | **Flow**                                                                                                                                  | **Postconditions**                            |
+|-------------------------|--------------------------------------------------------------|------------|------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------|
+| **User Registration**   | A new user registers for the LiftGuard application.         | User       | The user has downloaded and installed the LiftGuard application. | 1. User opens the LiftGuard app.<br>2. User navigates to the registration page.<br>3. User enters personal details (name, email, password).<br>4. User completes the registration form and submits.<br>5. System sends a confirmation email to the user.<br>6. User clicks on the confirmation link in the email to activate their account. | User account is created and activated.       |
+| **User Login**          | An existing user logs into the LiftGuard application.        | User       | The user has a registered and activated account.                 | 1. User opens the LiftGuard app.<br>2. User navigates to the login page.<br>3. User enters email and password.<br>4. User clicks the login button.<br>5. System verifies the credentials.<br>6. User is granted access to their account.                                                          | User is logged in and directed to the home screen. |
+| **Upload Exercise Video** | A user uploads a video of their exercise for analysis.      | User       | The user is logged in and has access to the video upload feature.| 1. User navigates to the video upload section.<br>2. User selects a video from their device.<br>3. User uploads the video to the system.<br>4. System processes the video for analysis.                                      | Video is uploaded and ready for AI analysis. |
+| **AI Feedback on Exercise** | The AI model provides feedback on the user's uploaded exercise video. | User, AI System | The user has uploaded an exercise video.                         | 1. AI system analyzes the uploaded video.<br>2. AI system identifies any issues with the user's form or technique.<br>3. AI system generates feedback.<br>4. User receives feedback on their exercise performance.                                     | User receives AI-generated feedback on their exercise video. |
+| **View Progress and Analytics** | A user views their exercise progress and analytics over time.  | User       | The user has uploaded multiple exercise videos and received feedback. | 1. User navigates to the progress and analytics section.<br>2. System displays graphical representations of the user's progress.<br>3. User reviews their performance metrics and improvement over time.                                                | User gains insights into their progress and areas needing improvement. |
+| **Set Exercise Goals**  | A user sets personal exercise goals within the application. | User       | The user is logged in.                                           | 1. User navigates to the goals section.<br>2. User sets specific exercise goals (e.g., improve squat form, increase bench press weight).<br>3. System saves the user's goals.<br>4. System tracks progress towards these goals.                               | User's goals are saved and tracked by the system. |
+| **Receive Notifications** | The user receives notifications about their progress, reminders, and updates. | User, System | The user is logged in and has notifications enabled.             | 1. System sends notifications about various events (e.g., new feedback, goal progress, app updates).<br>2. User receives and views the notifications.                                                                                                     | User stays informed about their progress and important updates. |
+| **Engage with Community** | Users interact with the community to share progress and tips. | User, Other Users | The user is logged in and has access to the community feature.   | 1. User navigates to the community section.<br>2. User posts updates, questions, or tips.<br>3
 
-2. **User Login**
-   - **Description:** An existing user logs into the LiftGuard application.
-   - **Actors:** User
-   - **Preconditions:** The user has a registered and activated account.
-   - **Flow:**
-     1. User opens the LiftGuard app.
-     2. User navigates to the login page.
-     3. User enters email and password.
-     4. User clicks the login button.
-     5. System verifies the credentials.
-     6. User is granted access to their account.
-   - **Postconditions:** User is logged in and directed to the home screen.
-
-3. **Upload Exercise Video**
-   - **Description:** A user uploads a video of their exercise for analysis.
-   - **Actors:** User
-   - **Preconditions:** The user is logged in and has access to the video upload feature.
-   - **Flow:**
-     1. User navigates to the video upload section.
-     2. User selects a video from their device.
-     3. User uploads the video to the system.
-     4. System processes the video for analysis.
-   - **Postconditions:** Video is uploaded and ready for AI analysis.
-
-4. **AI Feedback on Exercise**
-   - **Description:** The AI model provides feedback on the user's uploaded exercise video.
-   - **Actors:** User, AI System
-   - **Preconditions:** The user has uploaded an exercise video.
-   - **Flow:**
-     1. AI system analyzes the uploaded video.
-     2. AI system identifies any issues with the user's form or technique.
-     3. AI system generates feedback.
-     4. User receives feedback on their exercise performance.
-   - **Postconditions:** User receives AI-generated feedback on their exercise video.
-
-5. **View Progress and Analytics**
-   - **Description:** A user views their exercise progress and analytics over time.
-   - **Actors:** User
-   - **Preconditions:** The user has uploaded multiple exercise videos and received feedback.
-   - **Flow:**
-     1. User navigates to the progress and analytics section.
-     2. System displays graphical representations of the user's progress.
-     3. User reviews their performance metrics and improvement over time.
-   - **Postconditions:** User gains insights into their progress and areas needing improvement.
-
-6. **Set Exercise Goals**
-   - **Description:** A user sets personal exercise goals within the application.
-   - **Actors:** User
-   - **Preconditions:** The user is logged in.
-   - **Flow:**
-     1. User navigates to the goals section.
-     2. User sets specific exercise goals (e.g., improve squat form, increase bench press weight).
-     3. System saves the user's goals.
-     4. System tracks progress towards these goals.
-   - **Postconditions:** User's goals are saved and tracked by the system.
-
-7. **Receive Notifications**
-   - **Description:** The user receives notifications about their progress, reminders, and updates.
-   - **Actors:** User, System
-   - **Preconditions:** The user is logged in and has notifications enabled.
-   - **Flow:**
-     1. System sends notifications about various events (e.g., new feedback, goal progress, app updates).
-     2. User receives and views the notifications.
-   - **Postconditions:** User stays informed about their progress and important updates.
-
-8. **Engage with Community**
-   - **Description:** Users interact with the community to share progress and tips.
-   - **Actors:** User, Other Users
-   - **Preconditions:** The user is logged in and has access to the community feature.
-   - **Flow:**
-     1. User navigates to the community section.
-     2. User posts updates, questions, or tips.
-     3. Other users view and respond to the posts.
-   - **Postconditions:** User interacts with the community, gaining support and advice.
-
-9. **User Profile Management**
-   - **Description:** The user updates their personal profile information.
-   - **Actors:** User
-   - **Preconditions:** The user is logged in.
-   - **Flow:**
-     1. User navigates to their profile section.
-     2. User updates personal details (e.g., name, email, password, profile picture).
-     3
-
-. User saves the changes.
-   - **Postconditions:** User's profile information is updated in the system.
-
-10. **App Settings Configuration**
-    - **Description:** The user configures app settings such as notification preferences and language.
-    - **Actors:** User
-    - **Preconditions:** The user is logged in.
-    - **Flow:**
-      1. User navigates to the settings section.
-      2. User adjusts settings (e.g., notification preferences, language options).
-      3. User saves the settings.
-    - **Postconditions:** User's settings are updated and applied.
+. Other users view and respond to the posts.                                                                                                                   | User interacts with the community, gaining support and advice. |
+| **User Profile Management** | The user updates their personal profile information.       | User       | The user is logged in.                                           | 1. User navigates to their profile section.<br>2. User updates personal details (e.g., name, email, password, profile picture).<br>3. User saves the changes.                                                                                               | User's profile information is updated in the system. |
+| **App Settings Configuration** | The user configures app settings such as notification preferences and language. | User       | The user is logged in.                                           | 1. User navigates to the settings section.<br>2. User adjusts settings (e.g., notification preferences, language options).<br>3. User saves the settings.                                                                                                 | User's settings are updated and applied.    |
 
 ---
 
@@ -383,7 +288,6 @@ Users can export their analyzed exercise videos for sharing or further analysis.
 - **Sharing Options:** Users can directly share the exported videos through social media platforms, email, or messaging apps.
 - **Download Options:** Users can download the video to their device for offline access or further analysis.
 - **Watermarking:** Include a LiftGuard watermark on exported videos to promote the application.
-
 
 #### ➭ 3.2.10 Notifications
 
