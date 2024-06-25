@@ -200,30 +200,73 @@ For a squat, the outputs will be:
 
 The AI model assigns a label only if it is at least 75% confident in its assessment. If multiple labels are above 75% confidence, all relevant labels are assigned, except if the "Correct" label is also above 75% confidence and higher than any other label, in which case only "Correct" is assigned. If no labels are above 75% confidence, the output is "Incorrect video."
 
-The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
-
 ### <u>Output Process Flowchart</u>
 
-```mermaid
-graph TD
-  A[Process] --> B{Is there any label above 75%?}
-  
-  B -- No --> C[Label the video as "Incorrect"]
-  
-  B -- Yes --> D[Ignore the labels below 75%]
-  
-  D --> E{Is "Correct" the highest confidence label?}
-  
-  E -- Yes --> F[Label the video as "Correct"]
+![Output](/documents/images/flowcharts/output.png)
 
-  E -- No --> G[Ignore the "Correct" label]
-
-  G --> H[Label the video as "Incorrect" and assign any remaining labels from highest to lowest]
-```
+The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
 
 ---
 
 ### 3.2 Mobile Application
+
+```mermaid
+graph TD
+    A[Open LiftGuard App] --> B[Registration Page]
+    B --> C[Enter Personal Details]
+    C --> D[Submit Registration Form]
+    D --> E[Confirmation Email Sent]
+    E --> F[Click Confirmation Link]
+    F --> G[Account Activated]
+
+    A --> H[Login Page]
+    H --> I[Enter Email and Password]
+    I --> J[Click Login Button]
+    J --> K[Credentials Verified]
+    K --> L[Access Granted to Home Screen]
+
+    L --> M[Home Screen]
+    M --> N[Upload Exercise Video]
+    N --> O[Select Video from Device]
+    O --> P[Upload Video]
+    P --> Q[Video Processed for Analysis]
+    
+    Q --> R[AI Analyzes Video]
+    R --> S[Generates Feedback]
+    S --> T[User Receives Feedback]
+
+    M --> U[View Progress and Analytics]
+    U --> V[Progress Charts]
+    V --> W[Performance Metrics]
+    W --> X[Goals Tracking]
+
+    M --> Y[Set Exercise Goals]
+    Y --> Z[Goals Saved and Tracked]
+
+    M --> AA[Receive Notifications]
+    AA --> AB[New Feedback]
+    AA --> AC[Goal Reminders]
+    AA --> AD[App Updates]
+
+    M --> AE[Engage with Community]
+    AE --> AF[Post Updates, Questions, Tips]
+    AF --> AG[View and Respond to Posts]
+
+    M --> AH[Profile Management]
+    AH --> AI[Update Personal Info]
+    AI --> AJ[Save Changes]
+
+    M --> AK[App Settings Configuration]
+    AK --> AL[Adjust Notification Preferences]
+    AL --> AM[Adjust Language Options]
+    AM --> AN[Save Settings]
+
+    M --> AO[Export Video]
+    AO --> AP[Annotated Video Export]
+    AP --> AQ[Sharing Options]
+    AQ --> AR[Download Options]
+    AR --> AS[Watermarking]
+```
 
 #### ➭ 3.2.1 Overview
 The **LiftGuard** mobile application serves as the primary interface for users to interact with the AI model, upload exercise videos, receive feedback, track progress, set goals, and engage with the community. The application is designed to be user-friendly, intuitive, and engaging, providing a seamless experience for users to optimize their exercise performance.
