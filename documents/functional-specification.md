@@ -239,49 +239,9 @@ graph TD
     H --> I[Enter Email and Password]
     I --> J[Click Login Button]
     J --> K[Credentials Verified]
-    K --> L[Access Granted to Home Screen]
 
-    L --> M[Home Screen]
-    M --> N[Upload Exercise Video]
-    N --> O[Select Video from Device]
-    O --> P[Upload Video]
-    P --> Q[Video Processed for Analysis]
-    
-    Q --> R[AI Analyzes Video]
-    R --> S[Generates Feedback]
-    S --> T[User Receives Feedback]
-
-    M --> U[View Progress and Analytics]
-    U --> V[Progress Charts]
-    V --> W[Performance Metrics]
-    W --> X[Goals Tracking]
-
-    M --> Y[Set Exercise Goals]
-    Y --> Z[Goals Saved and Tracked]
-
-    M --> AA[Receive Notifications]
-    AA --> AB[New Feedback]
-    AA --> AC[Goal Reminders]
-    AA --> AD[App Updates]
-
-    M --> AE[Engage with Community]
-    AE --> AF[Post Updates, Questions, Tips]
-    AF --> AG[View and Respond to Posts]
-
-    M --> AH[Profile Management]
-    AH --> AI[Update Personal Info]
-    AI --> AJ[Save Changes]
-
-    M --> AK[App Settings Configuration]
-    AK --> AL[Adjust Notification Preferences]
-    AL --> AM[Adjust Language Options]
-    AM --> AN[Save Settings]
-
-    M --> AO[Export Video]
-    AO --> AP[Annotated Video Export]
-    AP --> AQ[Sharing Options]
-    AQ --> AR[Download Options]
-    AR --> AS[Watermarking]
+    G --> L[Home Screen]
+    K --> L[Home Screen]
 ```
 
 #### ➭ 3.2.1 Overview
