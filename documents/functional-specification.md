@@ -208,8 +208,8 @@ The feedback will be presented to the user through the mobile application interf
 graph TD
   A[Process] --> B{Is there any label above 75%?}
   
-  B -- No --> C[Label the video as "Incorrect video"]
-
+  B -- No --> C[Label the video as "Incorrect"]
+  
   B -- Yes --> D[Ignore the labels below 75%]
   
   D --> E{Is "Correct" the highest confidence label?}
@@ -218,16 +218,7 @@ graph TD
 
   E -- No --> G[Ignore the "Correct" label]
 
-  G --> H[Label the video as "Incorrect" and assign any remaining labels from the highest to the lowest]
-
-  style A fill:#f9f,stroke:#333,stroke-width:2px;
-  style B fill:#f9f,stroke:#333,stroke-width:2px;
-  style D fill:#f9f,stroke:#333,stroke-width:2px;
-  style E fill:#f9f,stroke:#333,stroke-width:2px;
-  style C fill:#f96,stroke:#333,stroke-width:2px;
-  style F fill:#6f9,stroke:#333,stroke-width:2px;
-  style G fill:#69f,stroke:#333,stroke-width:2px;
-  style H fill:#96f,stroke:#333,stroke-width:2px;
+  G --> H[Label the video as "Incorrect" and assign any remaining labels from highest to lowest]
 ```
 
 ---
