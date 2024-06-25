@@ -206,17 +206,17 @@ The AI model assigns a label only if it is at least 75% confident in its assessm
 graph TD
   A[Process] --> B{Is there any label above 75%?}
   
-  B -- No --> C[Label the video as "Incorrect"]
+  B -- No --> C[Label the video as Incorrect]
   
   B -- Yes --> D[Ignore the labels below 75%]
   
-  D --> E{Is "Correct" the highest confidence label?}
+  D --> E{Is Correct the highest confidence label?}
   
-  E -- Yes --> F[Label the video as "Correct"]
+  E -- Yes --> F[Label the video as Correct]
 
-  E -- No --> G[Ignore the "Correct" label]
+  E -- No --> G[Ignore the Correct label]
 
-  G --> H[Label the video as "Incorrect" and assign any remaining labels from highest to lowest]
+  G --> H[Label the video as Incorrect and assign any remaining labels from highest to lowest]
 ```
 
 
