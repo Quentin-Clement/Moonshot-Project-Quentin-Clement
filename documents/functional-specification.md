@@ -202,7 +202,23 @@ The AI model assigns a label only if it is at least 75% confident in its assessm
 
 ### <u>Output Process Flowchart</u>
 
-![Output](/documents/images/flowcharts/output.png)
+```mermaid
+graph TD
+  A[Process] --> B{Is there any label above 75%?}
+  
+  B -- No --> C[Label the video as "Incorrect"]
+  
+  B -- Yes --> D[Ignore the labels below 75%]
+  
+  D --> E{Is "Correct" the highest confidence label?}
+  
+  E -- Yes --> F[Label the video as "Correct"]
+
+  E -- No --> G[Ignore the "Correct" label]
+
+  G --> H[Label the video as "Incorrect" and assign any remaining labels from highest to lowest]
+```
+
 
 The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
 
