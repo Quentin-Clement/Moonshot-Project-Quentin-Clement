@@ -12,6 +12,10 @@
     - [1.6 Glossary](#16-glossary)
   - [2. Personas and Use Cases](#2-personas-and-use-cases)
     - [2.1 Personas](#21-personas)
+      - [➭ 2.1.1 Victor - The newbie](#-211-victor---the-newbie)
+      - [➭ 2.1.2 Fabrice - The experienced lifter](#-212-fabrice---the-experienced-lifter)
+      - [➭ 2.1.3 Tiffany - The athlete](#-213-tiffany---the-athlete)
+      - [➭ 2.1.4 Brutia - The influencer](#-214-brutia---the-influencer)
     - [2.2 Use Cases](#22-use-cases)
   - [3. Functional Requirements](#3-functional-requirements)
     - [3.1 Artificial Intelligence Model](#31-artificial-intelligence-model)
@@ -30,6 +34,7 @@
       - [➭ 3.2.7 Profile Management](#-327-profile-management)
       - [➭ 3.2.8 Export Video](#-328-export-video)
       - [➭ 3.2.9 Notifications](#-329-notifications)
+      - [➭ 3.2.10 User Workflow](#-3210-user-workflow)
   - [4 Non-Functional Requirements](#4-non-functional-requirements)
     - [4.1 Data Security](#41-data-security)
     - [4.2 App Performance and Time Responsiveness](#42-app-performance-and-time-responsiveness)
@@ -125,7 +130,23 @@ This document is used as a reference for the development team, including tech le
 
 ### 2.1 Personas
 
-TODO: Create personas
+#### ➭ 2.1.1 Victor - The newbie
+
+![Victor](/documents/images/personas/victor.png)
+
+#### ➭ 2.1.2 Fabrice - The experienced lifter
+
+![Fabrice](/documents/images/personas/fabrice.png)
+
+#### ➭ 2.1.3 Tiffany - The athlete
+
+![Tiffany](/documents/images/personas/tiffany.png)
+
+#### ➭ 2.1.4 Brutia - The influencer
+
+![Brutia](/documents/images/personas/brutia.png)
+
+---
 
 ### 2.2 Use Cases
 
@@ -180,21 +201,11 @@ For a squat, the outputs will be:
 - ✅ Correct
 - ❌ Knee Cave (Valgus Collapse)
 - ❌ Knees Forward
-- ❌ Butt Wink
-- ❌ Hip Shift
 - ❌ Heels Lifting
 - ❌ Forward Lean
-- ❌ Bar Path
-- ❌ Elbow Position
-- ❌ Head Position
-- ❌ Breathing
 - ❌ Depth
-- ❌ Grip Width
 - ❌ Foot Placement
-- ❌ Back Tightness
-- ❌ Rushing the Descent
 - ❌ Asymmetrical Movement
-- ❌ Not Engaging Core
 - ❌ Improper Bar Placement
 - ❌ Overarching the Back
 
@@ -225,24 +236,6 @@ The feedback will be presented to the user through the mobile application interf
 ---
 
 ### 3.2 Mobile Application
-
-```mermaid
-graph TD
-    A[Open LiftGuard App] --> B[Registration Page]
-    B --> C[Enter Personal Details]
-    C --> D[Submit Registration Form]
-    D --> E[Confirmation Email Sent]
-    E --> F[Click Confirmation Link]
-    F --> G[Account Activated]
-
-    A --> H[Login Page]
-    H --> I[Enter Email and Password]
-    I --> J[Click Login Button]
-    J --> K[Credentials Verified]
-
-    G --> L[Home Screen]
-    K --> L[Home Screen]
-```
 
 #### ➭ 3.2.1 Overview
 The **LiftGuard** mobile application serves as the primary interface for users to interact with the AI model, upload exercise videos, receive feedback, track progress, set goals, and engage with the community. The application is designed to be user-friendly, intuitive, and engaging, providing a seamless experience for users to optimize their exercise performance.
@@ -342,6 +335,25 @@ Keep users informed about their activity and application updates.
   - **Goal Reminders:** Notifications to remind users of their set goals.
   - **App Updates:** Inform users about new features and updates.
 
+####  ➭ 3.2.10 User Workflow
+```mermaid
+graph TD
+    A[Open LiftGuard App] --> B[Registration Page]
+    B --> C[Enter Personal Details]
+    C --> D[Submit Registration Form]
+    D --> E[Confirmation Email Sent]
+    E --> F[Click Confirmation Link]
+    F --> G[Account Activated]
+
+    A --> H[Login Page]
+    H --> I[Enter Email and Password]
+    I --> J[Click Login Button]
+    J --> K[Credentials Verified]
+
+    G --> L[Home Screen]
+    K --> L[Home Screen]
+```
+
 ---
 
 ## 4 Non-Functional Requirements
@@ -355,6 +367,8 @@ Data security is paramount to protect users' personal information and exercise d
   - **Data Anonymization:** Anonymize user data for analysis to ensure privacy.
   - **Access Control:** Use role-based access control (RBAC) to restrict access to sensitive data and functionalities.
   - **Regular Audits:** Conduct regular security audits and vulnerability assessments.
+
+---
 
 ### 4.2 App Performance and Time Responsiveness
 The performance and responsiveness of the app are critical to providing a smooth user experience.
