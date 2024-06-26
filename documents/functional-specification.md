@@ -13,7 +13,7 @@
   - [2. Personas and Use Cases](#2-personas-and-use-cases)
     - [2.1 Personas](#21-personas)
       - [➭ 2.1.1 Victor - The newbie](#-211-victor---the-newbie)
-      - [➭ 2.1.2 Fabrice - The experienced lifter](#-212-fabrice---the-experienced-lifter)
+      - [➭ 2.1.2 Fabrice - The experienced](#-212-fabrice---the-experienced)
       - [➭ 2.1.3 Tiffany - The athlete](#-213-tiffany---the-athlete)
       - [➭ 2.1.4 Brutia - The influencer](#-214-brutia---the-influencer)
     - [2.2 Use Cases](#22-use-cases)
@@ -134,7 +134,7 @@ This document is used as a reference for the development team, including tech le
 
 ![Victor](/documents/images/personas/victor.png)
 
-#### ➭ 2.1.2 Fabrice - The experienced lifter
+#### ➭ 2.1.2 Fabrice - The experienced
 
 ![Fabrice](/documents/images/personas/fabrice.png)
 
