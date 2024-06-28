@@ -62,7 +62,7 @@ June 21, 2024
 ---
 
 ### 1.2 Executive Summary
-**LiftGuard** is a project aimed at correcting users' gestures when doing powerlifting or bodybuilding. The objectives are to:
+**LiftGuard** is a project aimed at correcting users' gestures when doing powerlifting . The objectives are to:
 - Optimize muscle activation
 - Prevent injuries
 - Accelerate progress
@@ -170,7 +170,7 @@ This document is used as a reference for the development team, including tech le
 ### 3.1 Artificial Intelligence Model
 
 #### ➭ 3.1.1 Overview
-The AI model in **LiftGuard** is designed to analyze exercise videos uploaded by the user and provide detailed feedback on the user's form and technique. This functionality aims to help users optimize muscle activation, prevent injuries, and accelerate their progress in powerlifting or bodybuilding exercises.
+The AI model in **LiftGuard** is designed to analyze exercise videos uploaded by the user and provide detailed feedback on the user's form and technique. This functionality aims to help users optimize muscle activation, prevent injuries, and accelerate their progress in powerlifting exercises.
 
 As an initial version (MVP) and potentially until the end of the first phase, the AI model will focus exclusively on analyzing squats. New models for other exercises will be added in future phases.
 
@@ -184,6 +184,12 @@ The primary input for the AI model is a video uploaded by the user. The video sh
 Input details:
 - Video file uploaded by the user
 - Metadata such as the exercise type (initially limited to squats)
+
+**Below is a bird's eye view of a squat environment for camera placement:**
+- 🟩 Green areas indicate the optimal angles for analysis.
+- 🟥 Red striped areas indicate the angles that should be avoided.
+
+![Angle](/documents/images/angle.png)
 
 #### ➭ 3.1.4 Output
 
@@ -211,23 +217,7 @@ The AI model assigns a label only if it is at least 75% confident in its assessm
 
 ### <u>Output Process Flowchart</u>
 
-```mermaid
-graph TD
-  A[Process] --> B{Is there any label above 75%?}
-  
-  B -- No --> C[Label the video as Incorrect]
-  
-  B -- Yes --> D[Ignore the labels below 75%]
-  
-  D --> E{Is Correct the highest confidence label?}
-  
-  E -- Yes --> F[Label the video as Correct]
-
-  E -- No --> G[Ignore the Correct label]
-
-  G --> H[Label the video as Incorrect and assign any remaining labels from highest to lowest]
-```
-
+![Output Process Flowchart](/documents/images/flowcharts/output.png)
 
 The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
 
