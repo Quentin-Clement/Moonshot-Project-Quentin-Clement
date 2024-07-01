@@ -81,33 +81,33 @@ The scope of this document includes detailed technical specifications for the Li
 flowchart TD
     subgraph Mobile Application
         direction TB
-        A1[User Interface]
-        A2[Client Logic]
-        A3[Local Storage]
-        A4[Notification Service]
+        A1User Interface
+        A2 Client Logic
+        A3 Local Storage
+        A4 Notification Service
     end
 
     subgraph Backend
         direction TB
-        B1[API Gateway]
-        B2[Authentication Service]
-        B3[Video Processing Service]
-        B4[Feedback Service]
-        B5[Notification Service]
+        B1 API Gateway
+        B2 Authentication Service
+        B3 Video Processing Service
+        B4 Feedback Service
+        B5 Notification Service
     end
 
     subgraph Database
         direction TB
-        C1[User Data]
-        C2[Video Metadata]
-        C3[Feedback Data]
-        C4[Community Data]
+        C1 User Data
+        C2 Video Metadata
+        C3 Feedback Data
+        C4 Community Data
     end
 
     subgraph AI Model
         direction TB
-        D1[Video Inference Engine]
-        D2[Model Training Component]
+        D1 Video Inference Engine
+        D2 Model Training Component
     end
 
     Mobile Application -->|API Calls| Backend
