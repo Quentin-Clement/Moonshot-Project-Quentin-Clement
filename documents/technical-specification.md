@@ -79,7 +79,7 @@ The scope of this document includes detailed technical specifications for the Li
 
 ```mermaid
 flowchart TD
-    subgraph Mobile Application
+    subgraph Mobile_Application
         direction TB
         A1[User Interface]
         A2[Client Logic]
@@ -104,16 +104,19 @@ flowchart TD
         C4[Community Data]
     end
 
-    subgraph AI Model
+    subgraph AI_Model
         direction TB
         D1[Video Inference Engine]
         D2[Model Training Component]
     end
 
-    Mobile Application -->|API Calls| Backend
-    Backend -->|Database Queries| Database
-    Backend -->|gRPC Calls| AI Model
-    AI Model -->|Analysis Results| Backend
+    A2 -->|API Calls| B1
+    B1 -->|Database Queries| C1
+    B1 -->|Database Queries| C2
+    B1 -->|Database Queries| C3
+    B1 -->|Database Queries| C4
+    B3 -->|gRPC Calls| D1
+    D1 -->|Analysis Results| B4
 
     A1 -->|User Input| A2
     A2 -->|Store Data| A3
