@@ -81,7 +81,7 @@ The scope of this document includes detailed technical specifications for the Li
 flowchart TD
     subgraph Mobile Application
         direction TB
-        A1User Interface
+        A1 User Interface
         A2 Client Logic
         A3 Local Storage
         A4 Notification Service
