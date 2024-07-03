@@ -18,6 +18,11 @@
       - [3.1.3 Data Splitting](#313-data-splitting)
       - [3.1.3 Data Preprocessing](#313-data-preprocessing)
       - [3.1.4 Model Architecture](#314-model-architecture)
+    - [3.1.4 Model Architecture](#314-model-architecture-1)
+      - [Neural Network Design](#neural-network-design)
+      - [Hyperparameters](#hyperparameters)
+      - [Model Architecture Diagram](#model-architecture-diagram)
+      - [Implementation Outline](#implementation-outline)
       - [3.1.5 Training and Validation](#315-training-and-validation)
       - [3.1.6 Model Evaluation](#316-model-evaluation)
     - [3.2 Model Deployment and Usage](#32-model-deployment-and-usage)
@@ -240,8 +245,132 @@ The labels for each video will be encoded into numerical values to facilitate mo
 - **Depth:** 3
 
 #### 3.1.4 Model Architecture
-- **Neural Network Design:** Outline the architecture of the neural network used, including the types of layers (e.g., convolutional layers, pooling layers) and their configurations.
-- **Hyperparameters:** Detail the key hyperparameters used during training, such as learning rate, batch size, and number of epochs.
+### 3.1.4 Model Architecture
+
+The architecture of the AI model used for analyzing squat exercises is critical for achieving high accuracy and reliability. This section outlines the design of the neural network, including the types of layers used, their configurations, and the key hyperparameters for training.
+
+#### Neural Network Design
+
+The AI model is designed to process sequences of frames extracted from videos. Given the sequential nature of the data, a combination of Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) networks is employed. The CNN layers extract spatial features from each frame, while the LSTM layers capture the temporal dynamics across the sequence of frames.
+
+1. **Input Layer:**
+   - The input layer receives a sequence of frames. Each frame is a 640x480 image with 3 color channels (RGB).
+
+2. **Convolutional Layers:**
+   - **First Convolutional Layer:** 
+     - Filters: 32
+     - Kernel Size: (3, 3)
+     - Activation: ReLU
+     - Pooling: MaxPooling (2, 2)
+   - **Second Convolutional Layer:**
+     - Filters: 64
+     - Kernel Size: (3, 3)
+     - Activation: ReLU
+     - Pooling: MaxPooling (2, 2)
+   - **Third Convolutional Layer:**
+     - Filters: 128
+     - Kernel Size: (3, 3)
+     - Activation: ReLU
+     - Pooling: MaxPooling (2, 2)
+
+3. **Flatten Layer:**
+   - After the convolutional layers, the 3D feature maps are flattened into 1D vectors.
+
+4. **LSTM Layers:**
+   - **First LSTM Layer:**
+     - Units: 64
+     - Activation: ReLU
+     - Return Sequences: True
+   - **Second LSTM Layer:**
+     - Units: 64
+     - Activation: ReLU
+     - Return Sequences: False
+
+5. **Dense Layers:**
+   - **First Dense Layer:**
+     - Units: 64
+     - Activation: ReLU
+   - **Second Dense Layer:**
+     - Units: 32
+     - Activation: ReLU
+
+6. **Output Layer:**
+   - Units: Number of classes (e.g., 4 for Correct, Knee Cave, Heels Lifting, Depth)
+   - Activation: Softmax
+
+#### Hyperparameters
+
+The key hyperparameters used during training significantly influence the performance of the model. The chosen values are based on empirical results and best practices for training neural networks.
+
+- **Learning Rate:** 0.001
+- **Batch Size:** 32
+- **Number of Epochs:** 50
+- **Optimizer:** Adam
+- **Loss Function:** Categorical Cross-Entropy
+- **Dropout Rate:** 0.5 (to prevent overfitting)
+
+#### Model Architecture Diagram
+
+Here's a high-level diagram of the model architecture:
+
+```mermaid
+graph TB
+    A[Input Layer: Sequence of Frames] --> B[Conv Layer 1: 32 filters, 3x3, ReLU]
+    B --> C[MaxPooling 1: 2x2]
+    C --> D[Conv Layer 2: 64 filters, 3x3, ReLU]
+    D --> E[MaxPooling 2: 2x2]
+    E --> F[Conv Layer 3: 128 filters, 3x3, ReLU]
+    F --> G[MaxPooling 3: 2x2]
+    G --> H[Flatten Layer]
+    H --> I[LSTM Layer 1: 64 units, ReLU, Return Sequences]
+    I --> J[LSTM Layer 2: 64 units, ReLU, No Return Sequences]
+    J --> K[Dense Layer 1: 64 units, ReLU]
+    K --> L[Dense Layer 2: 32 units, ReLU]
+    L --> M[Output Layer: Softmax]
+```
+
+#### Implementation Outline
+
+The implementation of the model can be done using TensorFlow and Keras. Below is an outline of the implementation:
+
+```python
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten, LSTM, Dense, TimeDistributed, Dropout
+from tensorflow.keras.optimizers import Adam
+
+# Define the model
+model = Sequential()
+
+# Add convolutional layers
+model.add(TimeDistributed(Conv2D(32, (3, 3), activation='relu'), input_shape=(None, 480, 640, 3)))
+model.add(TimeDistributed(MaxPooling2D((2, 2))))
+model.add(TimeDistributed(Conv2D(64, (3, 3), activation='relu')))
+model.add(TimeDistributed(MaxPooling2D((2, 2))))
+model.add(TimeDistributed(Conv2D(128, (3, 3), activation='relu')))
+model.add(TimeDistributed(MaxPooling2D((2, 2))))
+model.add(TimeDistributed(Flatten()))
+
+# Add LSTM layers
+model.add(LSTM(64, activation='relu', return_sequences=True))
+model.add(LSTM(64, activation='relu', return_sequences=False))
+
+# Add dense layers
+model.add(Dense(64, activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(32, activation='relu'))
+model.add(Dropout(0.5))
+
+# Add output layer
+model.add(Dense(4, activation='softmax'))
+
+# Compile the model
+model.compile(optimizer=Adam(learning_rate=0.001), loss='categorical_crossentropy', metrics=['accuracy'])
+
+# Summary of the model
+model.summary()
+```
+
+It is important to note that the model architecture and hyperparameters may be subject to change based on the results of training and validation.
 
 #### 3.1.5 Training and Validation
 - **Training Process:** Explain the training process, including the loss function, optimization algorithm, and any regularization techniques used.
