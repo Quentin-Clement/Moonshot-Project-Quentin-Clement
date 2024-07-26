@@ -16,15 +16,10 @@
       - [3.1.1 Data Collection](#311-data-collection)
       - [3.1.2 Data Augmentation](#312-data-augmentation)
       - [3.1.3 Data Splitting](#313-data-splitting)
-      - [3.1.3 Data Preprocessing](#313-data-preprocessing)
-      - [3.1.4 Model Architecture](#314-model-architecture)
-    - [3.1.4 Model Architecture](#314-model-architecture-1)
-      - [Neural Network Design](#neural-network-design)
-      - [Hyperparameters](#hyperparameters)
-      - [Model Architecture Diagram](#model-architecture-diagram)
-      - [Implementation Outline](#implementation-outline)
-      - [3.1.5 Training and Validation](#315-training-and-validation)
-      - [3.1.6 Model Evaluation](#316-model-evaluation)
+      - [3.1.4 Data Preprocessing](#314-data-preprocessing)
+      - [3.1.5 Model Architecture](#315-model-architecture)
+      - [3.1.6 Training and Validation](#316-training-and-validation)
+      - [3.1.7 Model Evaluation](#317-model-evaluation)
     - [3.2 Model Deployment and Usage](#32-model-deployment-and-usage)
       - [3.2.1 Model Integration](#321-model-integration)
       - [3.2.2 Video Preprocessing for Inference](#322-video-preprocessing-for-inference)
@@ -184,7 +179,6 @@ Because we can't afford to record an infinite number of videos, we will use data
 Using these techniques, each original video can be augmented up to 16 times, significantly expanding the dataset while maintaining realistic variations.
 
 #### 3.1.3 Data Splitting
-
 - Training Set:
   - Ratio: 80% of the dataset
   - Number of Videos: 768 videos
@@ -200,8 +194,7 @@ Using these techniques, each original video can be augmented up to 16 times, sig
   - Number of Videos: 96 videos
   - Videos per Label: 24 videos per label
 
-#### 3.1.3 Data Preprocessing
-
+#### 3.1.4 Data Preprocessing
 **<u>➭ Image Resizing:</u>** \
 To ensure all videos have a consistent size and aspect ratio for input into the model, we will standardize the images to a resolution of 640x480 pixels with a 4:3 aspect ratio. This involves resizing images that are too big, too small, or have different aspect ratios.
 
@@ -244,12 +237,10 @@ The labels for each video will be encoded into numerical values to facilitate mo
 - **Heels Lifting:** 2
 - **Depth:** 3
 
-#### 3.1.4 Model Architecture
-### 3.1.4 Model Architecture
-
+#### 3.1.5 Model Architecture
 The architecture of the AI model used for analyzing squat exercises is critical for achieving high accuracy and reliability. This section outlines the design of the neural network, including the types of layers used, their configurations, and the key hyperparameters for training.
 
-#### Neural Network Design
+**Neural Network Design**
 
 The AI model is designed to process sequences of frames extracted from videos. Given the sequential nature of the data, a combination of Convolutional Neural Networks (CNNs) and Long Short-Term Memory (LSTM) networks is employed. The CNN layers extract spatial features from each frame, while the LSTM layers capture the temporal dynamics across the sequence of frames.
 
@@ -298,7 +289,7 @@ The AI model is designed to process sequences of frames extracted from videos. G
    - Units: Number of classes (e.g., 4 for Correct, Knee Cave, Heels Lifting, Depth)
    - Activation: Softmax
 
-#### Hyperparameters
+**Hyperparameters**
 
 The key hyperparameters used during training significantly influence the performance of the model. The chosen values are based on empirical results and best practices for training neural networks.
 
@@ -309,7 +300,7 @@ The key hyperparameters used during training significantly influence the perform
 - **Loss Function:** Categorical Cross-Entropy
 - **Dropout Rate:** 0.5 (to prevent overfitting)
 
-#### Model Architecture Diagram
+**Model Architecture Diagram**
 
 Here's a high-level diagram of the model architecture:
 
@@ -329,7 +320,7 @@ graph TB
     L --> M[Output Layer: Softmax]
 ```
 
-#### Implementation Outline
+**Implementation Outline**
 
 The implementation of the model can be done using TensorFlow and Keras. Below is an outline of the implementation:
 
@@ -372,14 +363,73 @@ model.summary()
 
 It is important to note that the model architecture and hyperparameters may be subject to change based on the results of training and validation.
 
-#### 3.1.5 Training and Validation
-- **Training Process:** Explain the training process, including the loss function, optimization algorithm, and any regularization techniques used.
-- **Validation:** Describe how the model is validated, including the use of validation datasets and performance metrics (e.g., accuracy, precision, recall).
+#### 3.1.6 Training and Validation
+**Training Process:**
 
-#### 3.1.6 Model Evaluation
-- **Performance Metrics:** Provide details on the performance metrics used to evaluate the model’s accuracy and reliability.
-- **Cross-Validation:** Explain any cross-validation techniques used to ensure the model's generalizability.
-- **Final Model Selection:** Describe the criteria for selecting the final model for deployment.
+1. **Data Preparation:**
+   - The training dataset, comprising 80% of the collected and augmented data, is used to train the model. Each video is processed into frames, and these frames are normalized and labeled as per the preprocessing steps.
+
+2. **Loss Function:**
+   - **Categorical Cross-Entropy Loss:** This loss function is chosen because the task is a multi-class classification problem where the model needs to classify the input video into one of the predefined categories (Correct, Knee Cave, Heels Lifting, Depth).
+
+3. **Optimization Algorithm:**
+   - **Adam Optimizer:** The Adam optimizer is utilized due to its efficiency and effectiveness in handling large datasets and complex models. It adjusts the learning rate during training, which helps in faster convergence.
+
+4. **Regularization Techniques:**
+   - **Dropout:** A dropout rate of 0.5 is applied to the dense layers to prevent overfitting by randomly dropping units during training.
+   - **Early Stopping:** Early stopping is implemented to monitor the validation loss and halt training if the loss does not improve for a specified number of epochs, thus avoiding overfitting and excessive computation.
+
+5. **Training Procedure:**
+   - The model is trained over 50 epochs with a batch size of 32. Each epoch involves feeding the training data into the model in batches, calculating the loss, and updating the model weights based on the optimizer's adjustments.
+
+6. **Monitoring Metrics:**
+   - **Accuracy:** The primary metric for monitoring the model's performance during training.
+   - **Loss:** Both training and validation loss are monitored to ensure the model is learning appropriately and to detect any signs of overfitting.
+
+**Validation:**
+
+1. **Validation Set:**
+   - The validation dataset, comprising 10% of the collected and augmented data, is used to validate the model. This set is not used in training but is essential for tuning hyperparameters and making decisions about model adjustments.
+
+2. **Validation Process:**
+   - During training, after each epoch, the model's performance is evaluated on the validation set. This helps in assessing how well the model generalizes to unseen data.
+
+3. **Performance Metrics:**
+   - **Validation Accuracy:** Used to measure the percentage of correct predictions on the validation set.
+   - **Validation Loss:** Monitored to ensure that the model is not overfitting and can generalize to new data.
+
+4. **Cross-Validation:**
+   - Cross-validation techniques, such as k-fold cross-validation, can be employed to further validate the model's performance and robustness. This involves splitting the data into k subsets and training/testing the model k times, each time with a different subset as the validation set and the remaining as the training set.
+
+---
+
+#### 3.1.7 Model Evaluation
+**Performance Metrics:**
+
+1. **Accuracy:** Measures the proportion of correctly predicted labels out of all predictions. High accuracy indicates the model's overall effectiveness.
+2. **Precision:** The ratio of true positive predictions to the sum of true positive and false positive predictions. High precision indicates fewer false positives.
+3. **Recall:** The ratio of true positive predictions to the sum of true positive and false negative predictions. High recall indicates fewer false negatives.
+4. **F1 Score:** The harmonic mean of precision and recall, providing a single metric that balances both false positives and false negatives.
+5. **Confusion Matrix:** A matrix showing the actual versus predicted classifications, providing detailed insight into the model's performance on each class.
+
+**Cross-Validation:**
+
+- **k-Fold Cross-Validation:**
+  - The dataset is split into k subsets (e.g., k=5). The model is trained and evaluated k times, each time using a different subset as the validation set and the remaining subsets as the training set. This ensures the model's performance is robust and not dependent on a specific split of the data.
+
+**Final Model Selection:**
+
+1. **Evaluation on Testing Set:**
+   - The final evaluation is performed on the testing dataset, comprising 10% of the data. This set has not been used in training or validation, ensuring an unbiased assessment of the model's performance.
+
+2. **Performance Criteria:**
+   - The model achieving the highest accuracy, precision, recall, and F1 score on the testing set is selected for deployment. Additionally, the confusion matrix is analyzed to ensure balanced performance across all classes.
+
+3. **Model Robustness:**
+   - The selected model must demonstrate robustness, meaning it performs consistently well across different data splits and does not overfit to any particular subset of the data.
+
+4. **Implementation Readiness:**
+   - The final model is also evaluated for its readiness to be integrated into the application, considering factors like inference time, computational efficiency, and scalability.
 
 ---
 
