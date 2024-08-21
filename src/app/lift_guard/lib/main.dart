@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+import 'dart:convert'; // Import to handle JSON decoding
 
 void main() {
   runApp(VideoUploaderApp());
@@ -27,7 +28,7 @@ class VideoUploadPage extends StatefulWidget {
 
 class _VideoUploadPageState extends State<VideoUploadPage> {
   File? _videoFile;
-  String _feedback = '';
+  String _feedback = ''; // To store feedback from the server
 
   Future<void> _pickVideo() async {
     final picker = ImagePicker();
@@ -41,20 +42,30 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
   Future<void> _uploadVideo() async {
     if (_videoFile == null) return;
 
-    final uri = Uri.parse('http://<FLASK_SERVER_IP>:5000/analyze_video');
+    final uri = Uri.parse('http://127.0.0.1:5000/analyze'); // Adjust URL for real device/emulator if needed
     final request = http.MultipartRequest('POST', uri)
       ..files.add(await http.MultipartFile.fromPath('video', _videoFile!.path));
 
-    final response = await request.send();
+    try {
+      final response = await request.send();
+      final responseBody = await response.stream.bytesToString(); // Get response body
 
-    if (response.statusCode == 200) {
-      final responseData = await response.stream.bytesToString();
+      if (response.statusCode == 200) {
+        // Parse the JSON response
+        final jsonResponse = jsonDecode(responseBody); // Decode the JSON
+
+        // Get the 'feedback' field from the JSON response
+        setState(() {
+          _feedback = jsonResponse['feedback']; // Display feedback from the server
+        });
+      } else {
+        setState(() {
+          _feedback = 'Failed to upload video: ${response.statusCode}';
+        });
+      }
+    } catch (e) {
       setState(() {
-        _feedback = responseData;
-      });
-    } else {
-      setState(() {
-        _feedback = 'Failed to upload video';
+        _feedback = 'Error: $e'; // Handle any errors during the request
       });
     }
   }
@@ -80,7 +91,7 @@ class _VideoUploadPageState extends State<VideoUploadPage> {
               ),
             SizedBox(height: 20),
             Text(
-              _feedback,
+              _feedback, // Display the feedback from the server
               textAlign: TextAlign.center,
             ),
           ],
