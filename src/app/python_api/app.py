@@ -1,7 +1,9 @@
+
 from flask import Flask, request, jsonify
 import os
 import tempfile
 import cv2
+import json  # Importing json to handle JSON file reading and writing
 from utils import get_mediapipe_pose
 from process_frame import ProcessFrame
 from thresholds import get_thresholds
@@ -32,29 +34,32 @@ def analyze():
 
     # Open the video file using OpenCV
     cap = cv2.VideoCapture(temp_video.name)
-    results = []
+    frame_number = 0
 
     while cap.isOpened():
         ret, frame = cap.read()
         if not ret:
             break
 
-        # Process the frame using the existing logic
-        frame_result = upload_process_frame.process(frame, pose)
-        results.append(frame_result)
+        # Process the frame and log errors
+        upload_process_frame.process(frame, pose, frame_number)
+        frame_number += 1
 
     cap.release()
     os.remove(temp_video.name)
 
-    # Summarize the results
-    feedback = summarize_results(results)
-    
-    return jsonify({'feedback': feedback})
+    # After processing, return the content of the JSON error log
+    try:
+        with open(upload_process_frame.json_file_path, 'r') as json_file:
+            error_log = json.load(json_file)
+            # Ensure we always return a non-null response
+            if not error_log.get("errors"):
+                error_log["errors"] = []
+    except FileNotFoundError:
+        # In case the JSON file is not found (no errors detected), return a default structure
+        error_log = {"errors": []}
 
-def summarize_results(results):
-    # Summarize the frame-by-frame results (placeholder logic)
-    return "Processed video successfully"
+    return jsonify(error_log)
 
-if __name__ == '__main__':
-    # Start the Flask app
+if __name__ == "__main__":
     app.run(debug=True)
