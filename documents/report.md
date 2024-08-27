@@ -1,15 +1,18 @@
-# Functional Specification
+# Report
 
 ### Table of Contents
-- [Functional Specification](#functional-specification)
+
+- [Report](#report)
     - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
-    - [1.1 Project Overview](#11-project-overview)
-    - [1.2 Executive Summary](#12-executive-summary)
-    - [1.3 Purpose and Scope](#13-purpose-and-scope)
-    - [1.4 Intended Audience](#14-intended-audience)
-    - [1.5 Milestones and Deliverables](#15-milestones-and-deliverables)
-    - [1.6 Glossary](#16-glossary)
+    - [1.1 The problem](#11-the-problem)
+    - [1.2 The solution](#12-the-solution)
+    - [1.3 Project Scope](#13-project-scope)
+      - [1.3.1 The Application](#131-the-application)
+      - [1.3.2 The Artificial Intelligence](#132-the-artificial-intelligence)
+    - [1.4 Stakeholders](#14-stakeholders)
+    - [1.5 Intended Audience](#15-intended-audience)
+    - [1.6 Milestones and Deliverables](#16-milestones-and-deliverables)
   - [2. Personas and Use Cases](#2-personas-and-use-cases)
     - [2.1 Personas](#21-personas)
       - [➭ 2.1.1 Victor - The newbie](#-211-victor---the-newbie)
@@ -39,55 +42,76 @@
     - [4.1 Data Security](#41-data-security)
     - [4.2 App Performance and Time Responsiveness](#42-app-performance-and-time-responsiveness)
 
----
-
 ## 1. Introduction
 
-### 1.1 Project Overview
-**Project Name:**
-LiftGuard
+### 1.1 The problem
 
-**Document Title:**
-Functional Specification
+Since my earliest childhood, sport has been a massive pillar of my life. And with time, the hobby became a real ambition of performance. \
+To achieve my goals, I had to get the most out of my body while preventing injury. On that task, I was helped by coaches who taught me the right techniques and the right exercises to mix performance and safety. 
 
-**Version:**
-0.1
+<br>
 
-**Date:**
-June 21, 2024
+Unfortunately, I never went to the Olympics but at least I never got seriously injured. Time flies and for a few years, I started to go to the gym. \
+This time, I didn't have a coach and I had to learn by myself. Quickly, the first pains and injuries appeared while my progresses were on the ups and downs. It didn't took me long to understand that my problem was the lack of technique. I would have love to have a coach but I couldn't afford it.
 
-**Author(s):**
-- Quentin CLÉMENT (Project Owner)
+<br>
 
----
+But then, <u> **How to to correct my technique without a coach?** </u>
 
-### 1.2 Executive Summary
-**LiftGuard** is a project aimed at correcting users' gestures when doing powerlifting. The objectives are to:
-- Optimize muscle activation
-- Prevent injuries
-- Accelerate progress
+### 1.2 The solution
 
-This document outlines the functional specifications of the **LiftGuard** project, detailing the requirements, use cases, and technologies used to ensure effective development and implementation.
+At first you can ask people at your gym to give you advice or watch videos on the internet. But it's not always easy to find someone who knows what he's talking about and the internet is full of contradictory information. \
+So I thought about a solution. Compare your technique to the one of international athletes.
 
-> 🚧 **Note:** The content of this document evolves over time as the project's scope changes and expands with each new version.
+<u> **But how?** </u> \
+An app that will ask you to film yourself while doing an exercise and then compare your video to a whole database of international athletes. It will detect your mistakes and give you advice to correct them.
 
----
+### 1.3 Project Scope
 
-### 1.3 Purpose and Scope
-**Purpose:**
-This document serves as a guide for the development and implementation of the **LiftGuard** project, outlining the functional requirements and specifications to be met.
+#### 1.3.1 The Application
 
-**Scope:**
-Develop a mobile application available on iOS and Android platforms. This application includes an AI model that analyzes the video provided by the user and gives feedback on the user's gestures. Initially, the AI model will focus on analyzing squats only. New models for other exercises will be added in future phases.
+➭ <u> The Marketplace </u>
 
----
+Following the technology choice of using Flutter, the app will be portable on both the Apple Store and the Google Play Store.
 
-### 1.4 Intended Audience
+➭ <u> The Features </u>
+
+The application will be fluid and user-friendly to fullfil UI and UX requirements. It will contain two main features:
+- An AI that will analyse your video and offer feedback to refine your technique.
+- A follow-up on your previous injuries with a set of exercises and warm-ups tailored to address any recurring pains or vulnerable body parts.
+
+➭ <u> Included Advertising </u>
+
+One of the biggest challenge will be to include advertising in the app. It will be necessary to find a way to make it non-intrusive and to not affect the user experience.
+
+#### 1.3.2 The Artificial Intelligence
+
+➭ <u> The Database </u>
+
+The AI will be trained using a database of videos featuring international powerlifting athletes as well as a database of videos demonstrating various incorrect techniques.
+> *💡 As many as possible for each movement to detect all kind of mistakes.* 
+
+To begin, we'll concentrate on the three key movements of powerlifting: **Squat**, **Bench Press** and **Deadlift**. 
+
+➭ <u> The Output </u>
+
+When the AI has finished analysing the video, it will output a list of mistakes.
+The output will be a basic error message saying which part(s) of the movement is incorrect but without precising why it's incorrect. \
+An example of output would be: "Wrong back position".
+> *🔮 Depending on the evolution of the project and of the complexity, the goal would be to have a generative AI that will provide more details on the mistake you are making. \
+> For instance: "Your back isn't sufficiently arched, ending up minimising the impact of your leg drive."*
+
+### 1.4 Stakeholders
+
+| Role | Name | Contact |
+| --- | --- | --- |
+| Project Owner | Quentin CLÉMENT | [GitHub](https://github.com/Quentin-Clement) / [LinkedIn](https://www.linkedin.com/in/quentin-clément-939110221/) |
+| Collaborator/Final Addressee | ALGOSUP | [Website](https://www.algosup.com/) / [GitHub](https://github.com/algosup) / [LinkedIn](https://www.linkedin.com/company/algosup/) |
+
+### 1.5 Intended Audience
 This document is used as a reference for the development team, including tech lead, developers, and testers, to ensure that the **LiftGuard** project meets the functional requirements and specifications outlined herein, and also for future maintenance and updates.
 
----
-
-### 1.5 Milestones and Deliverables
+### 1.6 Milestones and Deliverables
 
 **Project Phases:**
 - **Phase 1:** Concludes on September 11th, 2024, with a presentation to a jury.
@@ -106,25 +130,13 @@ This document is used as a reference for the development team, including tech le
 - **Final Application Release** - TBD
 
 **Deliverables:**
-- Functional Specification Document
-- Technical Specification Document
+- Functional Specification Document ✅
+- Technical Specification Document ✅
 - Mock-ups of the application
-- Source Code and AI model for gesture analysis
+- Source Code and AI model for gesture analysis ✅
 - Source Code for the mobile application
 - User Manual
 - Final presentation of the project
-
----
-
-### 1.6 Glossary
-
-| Term/Acronym | Definition                     |
-|--------------|--------------------------------|
-| API          | Application Programming Interface |
-| UX           | User Experience                |
-| DB           | Database                       |
-
----
 
 ## 2. Personas and Use Cases
 
