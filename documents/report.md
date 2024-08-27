@@ -148,6 +148,8 @@ The application will be fluid and user-friendly to fullfil UI and UX requirement
 
 One of the biggest challenge will be to include advertising in the app. It will be necessary to find a way to make it non-intrusive and to not affect the user experience.
 
+---
+
 ### 2.2 The Artificial Intelligence
 
 #### ➭ 2.2.1 The Database
@@ -367,23 +369,8 @@ Keep users informed about their activity and application updates.
  **App Updates:** Inform users about new features and updates.
 
 ####  ➭ 4.2.10 User Workflow
-```mermaid
-graph TD
-    A[Open LiftGuard App] --> B[Registration Page]
-    B --> C[Enter Personal Details]
-    C --> D[Submit Registration Form]
-    D --> E[Confirmation Email Sent]
-    E --> F[Click Confirmation Link]
-    F --> G[Account Activated]
 
-    A --> H[Login Page]
-    H --> I[Enter Email and Password]
-    I --> J[Click Login Button]
-    J --> K[Credentials Verified]
-
-    G --> L[Home Screen]
-    K --> L[Home Screen]
-```
+<img src="./images/flowcharts/user-workflow.png" height="800">
 
 ---
 
@@ -410,7 +397,6 @@ The performance and responsiveness of the app are critical to providing a smooth
   - **Scalability:** Design the app architecture to handle increasing numbers of users and data without degradation in performance.
   - **Resource Management:** Optimize the app to efficiently use device resources (e.g., CPU, memory) to prevent slowdowns and crashes.
 
----
 
 **Note:** The AI model will analyze only one repetition per video. If the provided video contains multiple repetitions, only the first one will be analyzed.
 
@@ -433,61 +419,7 @@ The LiftGuard system is composed of the following components:
 
 ### 6.2 System Architecture Diagram
 
-```mermaid
-flowchart TD
-    subgraph Mobile_Application
-        direction TB
-        A1[User Interface]
-        A2[Client Logic]
-        A3[Local Storage]
-        A4[Notification Service]
-    end
-
-    subgraph Backend
-        direction TB
-        B1[API Gateway]
-        B2[Authentication Service]
-        B3[Video Processing Service]
-        B4[Feedback Service]
-        B5[Notification Service]
-    end
-
-    subgraph Database
-        direction TB
-        C1[User Data]
-        C2[Video Metadata]
-        C3[Feedback Data]
-        C4[Community Data]
-    end
-
-    subgraph AI_Model
-        direction TB
-        D1[Video Inference Engine]
-        D2[Model Training Component]
-    end
-
-    A2 -->|API Calls| B1
-    B1 -->|Database Queries| C1
-    B1 -->|Database Queries| C2
-    B1 -->|Database Queries| C3
-    B1 -->|Database Queries| C4
-    B3 -->|gRPC Calls| D1
-    D1 -->|Analysis Results| B4
-
-    A1 -->|User Input| A2
-    A2 -->|Store Data| A3
-    A3 -->|Send Data| B1
-    B1 -->|Route Request| B2
-    B2 -->|Validate User| C1
-    B2 -->|Process Video| B3
-    B3 -->|Store Metadata| C2
-    B3 -->|Request Analysis| D1
-    D1 -->|Provide Feedback| B4
-    B4 -->|Store Feedback| C3
-    B4 -->|Send Feedback| A2
-    B5 -->|Notify User| A4
-    A4 -->|Display Notification| A1
-```
+![System Architecture Diagram](./images/flowcharts/sytem-architecture.png)
 
 ---
 
@@ -594,6 +526,8 @@ print(f"Test accuracy: {accuracy}")
 
 The model's accuracy metric gives an indication of how well it can detect form errors in new videos, and the loss function provides a measure of prediction error.
 
+---
+
 ### 6.5 Why deep learning?
 
 While similar projects exist that do not rely on deep learning, such as [this example](https://huggingface.co/spaces/Kunal7/squats-analysis/tree/main), deep learning brings several key advantages.
@@ -604,11 +538,15 @@ Secondly, deep learning offers greater flexibility and adaptability to account f
 
 Finally, deep learning models are robust to variations in camera angles, lighting, and distance. The model can generalize well across different perspectives, allowing users more freedom in how they record their movements while maintaining accuracy in performance feedback.
 
+---
+
 ### 6.6 Why TensorFlow and MediaPipe?
 
 TensorFlow and MediaPipe complement each other in building efficient and scalable AI models for real-time applications. TensorFlow provides the deep learning backbone, offering robust tools for training and deploying complex models, such as pose estimation and movement analysis. \
 Its ability to integrate with TensorFlow Lite allows the AI model in LiftGuard to run efficiently on mobile devices. MediaPipe, on the other hand, excels at real-time video and image processing. With its pre-built pipelines for hand, body, and face tracking, MediaPipe simplifies the task of extracting relevant key points from videos, which TensorFlow can then use for further analysis. \
 Together, TensorFlow and MediaPipe enable LiftGuard to deliver accurate performance feedback with minimal latency across various devices.
+
+---
 
 ### 6.7 Why Flutter?
 
@@ -637,7 +575,11 @@ Together, TensorFlow and MediaPipe enable LiftGuard to deliver accurate performa
 
 In summary, **Flutter** offers the best combination of performance, cross-platform capabilities, and development efficiency for **LiftGuard**, ensuring that the app is both scalable and highly performant across different devices and operating systems.
 
+---
+
 ## 7. Testing Strategy
+
+---
 
 ## 8. Management
 
@@ -654,6 +596,8 @@ In summary, **Flutter** offers the best combination of performance, cross-platfo
 **Week 9 (09/19 - 09/25):** Set up Firebase and continue the development of the mobile application as much as possible.  
 **Week 10 (09/26 - 09/28):** Write the final report.
 
+---
+
 ### 8.2 Actual Performance
 
 **Week 1 (07/24 - 07/30):** Timeline followed as planned.  
@@ -667,19 +611,27 @@ In summary, **Flutter** offers the best combination of performance, cross-platfo
 **Week 9 (09/19 - 09/25):** The AI model was abandoned, and focus shifted to analyzing videos directly via MediaPipe, with an attempt to connect it to a basic Flutter interface. Results were unsatisfactory.  
 **Week 10 (09/26 - 09/28):** Final report was written.
 
+---
+
 ## 9. Next Steps
 
 ### 9.1 Dataset
 
 The primary issue encountered during the project was the lack of a diverse and extensive dataset. To improve the AI model's performance, it's mandatory to collect a more comprehensive dataset with a wider range of body types, lifting techniques, and form errors. This dataset should include videos from various angles, lighting conditions, and environments to ensure the model can generalize well to different scenarios.
 
+---
+
 ### 9.2 Mobile Application
 
 The development of the mobile application hasn't started yet as it was relying on the successful completion of the AI model. When the results of the model will be considered satisfactory, the development of the mobile application will begin. The application should include features such as video upload, feedback display, progress tracking, community engagement, and user profile management. The UI/UX design should be intuitive, engaging, and responsive to provide a seamless user experience. It's far from being the hardest part of the project but it will be time-consuming.
 
+---
+
 ### 9.3 Testing Strategy
 
 At the moment of writing, the testing strategy hasn't been implemented yet. However, it will be crucial to ensure the system's reliability, accuracy, and performance. Testing should cover various aspects, including the AI model's accuracy, the mobile application's functionality, data security, and user experience.
+
+---
 
 ### 9.4 Deployment
 
