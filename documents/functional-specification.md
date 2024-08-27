@@ -132,19 +132,19 @@ This document is used as a reference for the development team, including tech le
 
 #### ➭ 2.1.1 Victor - The newbie
 
-![Victor](/documents/images/personas/victor.png)
+![Victor](./images/personas/victor.png)
 
 #### ➭ 2.1.2 Fabrice - The experienced
 
-![Fabrice](/documents/images/personas/fabrice.png)
+![Fabrice](./images/personas/fabrice.png)
 
 #### ➭ 2.1.3 Tiffany - The athlete
 
-![Tiffany](/documents/images/personas/tiffany.png)
+![Tiffany](./images/personas/tiffany.png)
 
 #### ➭ 2.1.4 Brutia - The influencer
 
-![Brutia](/documents/images/personas/brutia.png)
+![Brutia](./images/personas/brutia.png)
 
 ---
 
@@ -189,7 +189,7 @@ Input details:
 - 🟩 Green areas indicate the optimal angles for analysis.
 - 🟥 Red striped areas indicate the angles that should be avoided.
 
-![Angle](/documents/images/angle.png)
+<img src="./images/angle.png" height="200">
 
 #### ➭ 3.1.4 Output
 
@@ -217,7 +217,7 @@ The AI model assigns a label only if it is at least 75% confident in its assessm
 
 ### <u>Output Process Flowchart</u>
 
-![Output Process Flowchart](/documents/images/flowcharts/output.png)
+![Output Process Flowchart](./images/flowcharts/output.png)
 
 The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
 

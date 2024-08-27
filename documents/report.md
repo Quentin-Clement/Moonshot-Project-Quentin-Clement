@@ -11,8 +11,7 @@
       - [1.3.1 The Application](#131-the-application)
       - [1.3.2 The Artificial Intelligence](#132-the-artificial-intelligence)
     - [1.4 Stakeholders](#14-stakeholders)
-    - [1.5 Intended Audience](#15-intended-audience)
-    - [1.6 Milestones and Deliverables](#16-milestones-and-deliverables)
+    - [1.5 Milestones and Deliverables](#15-milestones-and-deliverables)
   - [2. Personas and Use Cases](#2-personas-and-use-cases)
     - [2.1 Personas](#21-personas)
       - [➭ 2.1.1 Victor - The newbie](#-211-victor---the-newbie)
@@ -41,6 +40,19 @@
   - [4 Non-Functional Requirements](#4-non-functional-requirements)
     - [4.1 Data Security](#41-data-security)
     - [4.2 App Performance and Time Responsiveness](#42-app-performance-and-time-responsiveness)
+  - [5. System Architecture](#5-system-architecture)
+    - [5.1 Overview](#51-overview)
+    - [5.2 System Architecture Diagram](#52-system-architecture-diagram)
+    - [5.3 Data Preprocessing](#53-data-preprocessing)
+      - [**Key Steps in Data Preprocessing:**](#key-steps-in-data-preprocessing)
+    - [5.4 Model Development and Evaluation](#54-model-development-and-evaluation)
+      - [5.4.1 Model Architecture](#541-model-architecture)
+      - [5.4.2 Model Compilation](#542-model-compilation)
+      - [5.4.3 Training and Evaluation](#543-training-and-evaluation)
+      - [5.4.4 Model Evaluation](#544-model-evaluation)
+    - [5.5 Why deep learning?](#55-why-deep-learning)
+    - [5.6 Why TensorFlow and MediaPipe?](#56-why-tensorflow-and-mediapipe)
+    - [5.7 Why Flutter?](#57-why-flutter)
 
 ## 1. Introduction
 
@@ -58,6 +70,8 @@ This time, I didn't have a coach and I had to learn by myself. Quickly, the firs
 
 But then, <u> **How to to correct my technique without a coach?** </u>
 
+---
+
 ### 1.2 The solution
 
 At first you can ask people at your gym to give you advice or watch videos on the internet. But it's not always easy to find someone who knows what he's talking about and the internet is full of contradictory information. \
@@ -65,6 +79,8 @@ So I thought about a solution. Compare your technique to the one of internationa
 
 <u> **But how?** </u> \
 An app that will ask you to film yourself while doing an exercise and then compare your video to a whole database of international athletes. It will detect your mistakes and give you advice to correct them.
+
+---
 
 ### 1.3 Project Scope
 
@@ -101,6 +117,8 @@ An example of output would be: "Wrong back position".
 > *🔮 Depending on the evolution of the project and of the complexity, the goal would be to have a generative AI that will provide more details on the mistake you are making. \
 > For instance: "Your back isn't sufficiently arched, ending up minimising the impact of your leg drive."*
 
+---
+
 ### 1.4 Stakeholders
 
 | Role | Name | Contact |
@@ -108,10 +126,9 @@ An example of output would be: "Wrong back position".
 | Project Owner | Quentin CLÉMENT | [GitHub](https://github.com/Quentin-Clement) / [LinkedIn](https://www.linkedin.com/in/quentin-clément-939110221/) |
 | Collaborator/Final Addressee | ALGOSUP | [Website](https://www.algosup.com/) / [GitHub](https://github.com/algosup) / [LinkedIn](https://www.linkedin.com/company/algosup/) |
 
-### 1.5 Intended Audience
-This document is used as a reference for the development team, including tech lead, developers, and testers, to ensure that the **LiftGuard** project meets the functional requirements and specifications outlined herein, and also for future maintenance and updates.
+---
 
-### 1.6 Milestones and Deliverables
+### 1.5 Milestones and Deliverables
 
 **Project Phases:**
 - **Phase 1:** Concludes on September 11th, 2024, with a presentation to a jury.
@@ -138,25 +155,27 @@ This document is used as a reference for the development team, including tech le
 - User Manual
 - Final presentation of the project
 
+---
+
 ## 2. Personas and Use Cases
 
 ### 2.1 Personas
 
 #### ➭ 2.1.1 Victor - The newbie
 
-![Victor](/documents/images/personas/victor.png)
+![Victor](./images/personas/victor.png)
 
 #### ➭ 2.1.2 Fabrice - The experienced
 
-![Fabrice](/documents/images/personas/fabrice.png)
+![Fabrice](./images/personas/fabrice.png)
 
 #### ➭ 2.1.3 Tiffany - The athlete
 
-![Tiffany](/documents/images/personas/tiffany.png)
+![Tiffany](./images/personas/tiffany.png)
 
 #### ➭ 2.1.4 Brutia - The influencer
 
-![Brutia](/documents/images/personas/brutia.png)
+![Brutia](./images/personas/brutia.png)
 
 ---
 
@@ -201,7 +220,7 @@ Input details:
 - 🟩 Green areas indicate the optimal angles for analysis.
 - 🟥 Red striped areas indicate the angles that should be avoided.
 
-![Angle](/documents/images/angle.png)
+<img src="./images/angle.png" height="200">
 
 #### ➭ 3.1.4 Output
 
@@ -229,7 +248,7 @@ The AI model assigns a label only if it is at least 75% confident in its assessm
 
 ### <u>Output Process Flowchart</u>
 
-![Output Process Flowchart](/documents/images/flowcharts/output.png)
+![Output Process Flowchart](./images/flowcharts/output.png)
 
 The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
 
@@ -384,3 +403,226 @@ The performance and responsiveness of the app are critical to providing a smooth
 ---
 
 **Note:** The AI model will analyze only one repetition per video. If the provided video contains multiple repetitions, only the first one will be analyzed.
+
+---
+
+## 5. System Architecture
+
+### 5.1 Overview
+
+The LiftGuard system is composed of the following components:
+
+| Component | Description | Technology |
+| --- | --- | --- |
+| Mobile Application (Frontend) | User interface for interacting with the system | Flutter 3.22.0 |
+| Mobile Application (Backend) | Server-side application handling business logic and data processing | Flutter 3.22.0 |
+| Database | Storage for user data, video metadata, feedback data, and community data | Firebase |
+| AI Model | Video inference engine for analyzing video content | Python 3.10.12 & TensorFlow 2.15.0 |
+
+---
+
+### 5.2 System Architecture Diagram
+
+```mermaid
+flowchart TD
+    subgraph Mobile_Application
+        direction TB
+        A1[User Interface]
+        A2[Client Logic]
+        A3[Local Storage]
+        A4[Notification Service]
+    end
+
+    subgraph Backend
+        direction TB
+        B1[API Gateway]
+        B2[Authentication Service]
+        B3[Video Processing Service]
+        B4[Feedback Service]
+        B5[Notification Service]
+    end
+
+    subgraph Database
+        direction TB
+        C1[User Data]
+        C2[Video Metadata]
+        C3[Feedback Data]
+        C4[Community Data]
+    end
+
+    subgraph AI_Model
+        direction TB
+        D1[Video Inference Engine]
+        D2[Model Training Component]
+    end
+
+    A2 -->|API Calls| B1
+    B1 -->|Database Queries| C1
+    B1 -->|Database Queries| C2
+    B1 -->|Database Queries| C3
+    B1 -->|Database Queries| C4
+    B3 -->|gRPC Calls| D1
+    D1 -->|Analysis Results| B4
+
+    A1 -->|User Input| A2
+    A2 -->|Store Data| A3
+    A3 -->|Send Data| B1
+    B1 -->|Route Request| B2
+    B2 -->|Validate User| C1
+    B2 -->|Process Video| B3
+    B3 -->|Store Metadata| C2
+    B3 -->|Request Analysis| D1
+    D1 -->|Provide Feedback| B4
+    B4 -->|Store Feedback| C3
+    B4 -->|Send Feedback| A2
+    B5 -->|Notify User| A4
+    A4 -->|Display Notification| A1
+```
+
+---
+
+### 5.3 Data Preprocessing
+
+In order to effectively train and utilize the AI model for exercise video analysis, several preprocessing steps must be performed on the input data. This preprocessing ensures that the model receives clean and standardized data, allowing for accurate analysis of exercise performance. The process involves multiple stages, from extracting individual video frames to preparing the data for model training.
+
+#### **Key Steps in Data Preprocessing:**
+
+1. **Video Frame Extraction:**  
+   The first step is to break the video into individual frames, allowing the AI model to analyze each frame independently. We extract 30 frames by second for a length of 5 seconds. This is done using OpenCV, which efficiently handles frame extraction.
+
+2. **Frame Resizing:**  
+   Each extracted frame is resized to a consistent dimension, typically a 4:3 aspect ratio, to ensure uniformity. This step standardizes the input for the AI model, making the training process more effective. OpenCV is also used for resizing each frame to fit this requirement.
+
+3. **Pose Estimation with MediaPipe:**  
+   MediaPipe, a robust framework for real-time video processing, is used to identify and track key body points (e.g., joints such as elbows, knees, and hips) within each frame. MediaPipe's pose detection model provides 33 key points, each containing x, y, z coordinates and a visibility score (indicating how clearly the point is visible in the frame). This results in a total of 132 features (33 points × 4 values) per frame.
+
+4. **Key Points Data Formatting:**  
+   The key points detected by MediaPipe are stored in a flattened NumPy array. This array represents the user's posture at each frame, with each value corresponding to a particular body part's position in 3D space. Flattening the key points data ensures it can be easily fed into the AI model for learning and analysis. For example, for each frame, the array might look like:  
+   `[x1, y1, z1, v1, x2, y2, z2, v2, ..., x33, y33, z33, v33]`, where `x`, `y`, and `z` are coordinates and `v` is visibility.
+
+5. **Label Mapping for Form Errors:**  
+   Each video is labeled with the specific form errors it contains, such as "knee cave" or "heels lifting." These labels are mapped to numerical values so the model can recognize different types of mistakes. For example:
+   - "Correct form" = 0
+   - "Knee Cave" = 1
+   - "Heels Lifting" = 2  
+   This mapping transforms textual labels into a format the model can use during training.
+
+6. **Sequence Creation for Model Input:**  
+   Since the model will analyze entire sequences of movements (rather than individual frames), multiple frames from each video are grouped into sequences. Each sequence is treated as an individual sample during training.
+
+7. **Labeling Each Sequence:**  
+   Along with the sequences of frames, corresponding labels are assigned to each one. For example, if a video demonstrates a knee cave error during a squat, all sequences extracted from that video will be labeled with the corresponding numerical value for "knee cave."
+
+8. **Train-Test Split:**  
+   To evaluate the model's performance, the data is split into two sets:
+   - **Training Set (75%)**: Used to train the model on identifying correct and incorrect form.
+   - **Testing Set (25%)**: Used to evaluate the model's accuracy on unseen data, ensuring it can generalize well to new examples. This is critical for ensuring the model works well on videos not included in the training set.
+
+The resulting preprocessed data consists of sequences of pose key points (`X_train`, `X_test`) and their corresponding labels (`y_train`, `y_test`). These datasets are then fed into the deep learning model for training and evaluation.
+
+By preparing the data in this structured manner, the AI model can more effectively identify mistakes and provide meaningful feedback to users on their exercise form.
+
+---
+
+### 5.4 Model Development and Evaluation
+
+#### 5.4.1 Model Architecture
+
+To develop the AI model, we employ a combination of **TimeDistributed Convolutional Neural Networks (CNNs)** and **Bidirectional Long Short-Term Memory (LSTM)** networks. Here's how the architecture is structured:
+
+1. **Input Layer**  
+   The input layer is designed to handle video sequences of varying lengths. Each video is represented as a sequence of frames, with each frame being resized to a fixed dimension of **240×320** pixels with 3 color channels (RGB). This ensures the model processes each frame individually but learns from the entire sequence collectively.  
+   Input shape: `(sequence_length, 240, 320, 3)`.
+
+2. **Convolutional Layers for Feature Extraction**  
+   The first part of the model consists of **2D convolutional layers** wrapped in **TimeDistributed** wrappers. This allows the model to apply convolution operations independently to each frame in the sequence. The convolutional layers are tasked with extracting spatial features, such as the position and orientation of the user's body in each frame.
+   
+   - The first Conv2D layer extracts **32** feature maps from each frame.
+   - Subsequent convolutional layers are applied with increasing filter sizes (from 32 to 128), allowing the model to capture more complex patterns at different resolutions.
+   - Residual connections are introduced via **residual blocks**, enabling the model to retain and reuse information from earlier layers, improving gradient flow and preventing vanishing gradients.
+   - Each block is followed by **Batch Normalization** and **MaxPooling** to reduce dimensionality while preserving essential features.
+
+3. **Bidirectional LSTM Layers for Temporal Learning**  
+   After the convolutional layers, the model flattens the output and feeds it into **Bidirectional LSTM layers**. LSTM layers are designed to capture temporal dependencies across the video sequence, allowing the model to learn from patterns over time. Using a **Bidirectional LSTM** ensures that the model learns both forward and backward sequences, improving the recognition of subtle form errors.
+   
+   - LSTM layer with **64 units** captures the temporal dynamics of the video, learning from both the past and future frames.
+
+4. **Attention Mechanism**  
+   An **Attention layer** is added to help the model focus on the most important frames in the sequence, emphasizing parts of the exercise that are critical for form evaluation (e.g., the bottom of a squat). The attention mechanism enhances the model's ability to weigh relevant information, making the analysis more accurate.
+
+5. **Dense Layers for Classification**  
+   After the sequence processing, the model uses fully connected **Dense layers** to classify the input into one of several possible categories (e.g., "Correct Form," "Knee Cave," "Heels Lifting"). The final layer applies a **softmax activation**, outputting probabilities for each possible class. The highest probability indicates the predicted form error.
+
+6. **Dropout Layers for Regularization**  
+   To prevent overfitting, **Dropout layers** are added with a dropout rate of 50%. These layers randomly deactivate a fraction of the neurons during training, encouraging the model to learn more robust features.
+
+#### 5.4.2 Model Compilation
+
+The model is compiled using the **Adam optimizer** for adaptive learning, and the loss function is set to **categorical cross-entropy**, appropriate for multi-class classification problems. The model also tracks **accuracy** as a performance metric.
+
+```python
+model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
+```
+
+#### 5.4.3 Training and Evaluation
+
+The training process involves fitting the model to the training data, using **X_train** for input frames and **y_train** for the corresponding labels (e.g., form errors). The training process is validated on **X_test** and **y_test** to ensure the model's performance generalizes well to new, unseen data.
+
+```python
+history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10)
+```
+
+#### 5.4.4 Model Evaluation
+
+Once the model is trained, it is evaluated on the test data to measure its performance in terms of **accuracy** and **loss**.
+
+```python
+loss, accuracy = model.evaluate(X_test, y_test)
+print(f"Test loss: {loss}")
+print(f"Test accuracy: {accuracy}")
+```
+
+The model's accuracy metric gives an indication of how well it can detect form errors in new videos, and the loss function provides a measure of prediction error.
+
+### 5.5 Why deep learning?
+
+While similar projects exist that do not rely on deep learning, such as [this example](https://huggingface.co/spaces/Kunal7/squats-analysis/tree/main), deep learning brings several key advantages.
+
+Firstly, deep learning models excel at automatically extracting relevant features from raw data, eliminating the need for manual feature engineering. This capability enables the AI model to recognize subtle patterns and nuances in videos that indicate correct or incorrect form with high precision.
+
+Secondly, deep learning offers greater flexibility and adaptability to account for a wide range of body types and lifting techniques. By training the model on a diverse dataset, it can learn to adjust for individual differences in morphology, lifting styles, and techniques.
+
+Finally, deep learning models are robust to variations in camera angles, lighting, and distance. The model can generalize well across different perspectives, allowing users more freedom in how they record their movements while maintaining accuracy in performance feedback.
+
+### 5.6 Why TensorFlow and MediaPipe?
+
+TensorFlow and MediaPipe complement each other in building efficient and scalable AI models for real-time applications. TensorFlow provides the deep learning backbone, offering robust tools for training and deploying complex models, such as pose estimation and movement analysis. \
+Its ability to integrate with TensorFlow Lite allows the AI model in LiftGuard to run efficiently on mobile devices. MediaPipe, on the other hand, excels at real-time video and image processing. With its pre-built pipelines for hand, body, and face tracking, MediaPipe simplifies the task of extracting relevant key points from videos, which TensorFlow can then use for further analysis. \
+Together, TensorFlow and MediaPipe enable LiftGuard to deliver accurate performance feedback with minimal latency across various devices.
+
+### 5.7 Why Flutter?
+
+**Flutter** was chosen as the framework for developing the **LiftGuard** mobile application due to its versatility, performance, and ability to support a seamless user experience across multiple platforms. Below are the key reasons for selecting Flutter:
+
+1. **Cross-Platform Development**  
+   Flutter enables **LiftGuard** to be developed for both **iOS** and **Android** with a single codebase. This reduces development time and effort compared to maintaining separate native apps for each platform. By writing the application in Flutter, we ensure consistent design, functionality, and performance across different devices and operating systems.
+
+2. **Performance**  
+   Flutter is known for delivering **native-like performance** because it uses a highly optimized rendering engine (Skia) and compiles directly to native ARM code. This results in fast startup times, smooth animations, and responsive UI interactions—all essential for an application like **LiftGuard**, which needs to handle video processing, real-time feedback, and data visualization efficiently.
+
+3. **Beautiful UI/UX Design**  
+   Flutter offers a rich set of customizable widgets that allow developers to create visually appealing and **responsive user interfaces**. The **LiftGuard** app benefits from Flutter's design flexibility, providing a **fluid and modern user experience** that meets UI/UX requirements. The ability to design complex UI elements such as progress graphs, video playback, and interactive feedback interfaces is greatly simplified with Flutter's widget system.
+
+4. **Hot Reload for Faster Development**  
+   Flutter’s **hot reload** feature allows developers to see changes in real-time without restarting the entire app. This significantly speeds up the development process, enabling quicker iteration on features and bug fixes. In the context of **LiftGuard**, this allows for faster prototyping and refinement of features such as the video upload and feedback analysis screens.
+
+5. **Rich Ecosystem and Libraries**  
+   Flutter's ecosystem includes a wide variety of **pre-built packages and libraries** that simplify the development of essential features like **authentication**, **video processing**, and **push notifications**. These packages accelerate the development of the **LiftGuard** app while ensuring robust performance and security. Flutter also integrates seamlessly with **Firebase**, making it easier to manage backend services like user data, video storage, and analytics.
+
+6. **Scalability and Future Expansion**  
+   Flutter’s architecture is designed to scale efficiently. As the user base of **LiftGuard** grows, the app will be able to handle increased traffic and larger datasets without major performance bottlenecks. Additionally, Flutter’s flexibility allows for the integration of advanced features like **in-app advertising**, **real-time chat for the community**, and **social media sharing**.
+
+7. **Support for Native Features**  
+   Although Flutter is cross-platform, it provides easy access to **platform-specific APIs** via **platform channels**. This ensures that **LiftGuard** can use device-specific functionalities like the camera for video capture, storage access for media, and notifications without sacrificing the user experience or relying on third-party integrations.
+
+In summary, **Flutter** offers the best combination of performance, cross-platform capabilities, and development efficiency for **LiftGuard**, ensuring that the app is both scalable and highly performant across different devices and operating systems.
