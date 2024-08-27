@@ -7,52 +7,64 @@
   - [1. Introduction](#1-introduction)
     - [1.1 The problem](#11-the-problem)
     - [1.2 The solution](#12-the-solution)
-    - [1.3 Project Scope](#13-project-scope)
-      - [1.3.1 The Application](#131-the-application)
-      - [1.3.2 The Artificial Intelligence](#132-the-artificial-intelligence)
-    - [1.4 Stakeholders](#14-stakeholders)
-    - [1.5 Milestones and Deliverables](#15-milestones-and-deliverables)
-  - [2. Personas and Use Cases](#2-personas-and-use-cases)
-    - [2.1 Personas](#21-personas)
-      - [➭ 2.1.1 Victor - The newbie](#-211-victor---the-newbie)
-      - [➭ 2.1.2 Fabrice - The experienced](#-212-fabrice---the-experienced)
-      - [➭ 2.1.3 Tiffany - The athlete](#-213-tiffany---the-athlete)
-      - [➭ 2.1.4 Brutia - The influencer](#-214-brutia---the-influencer)
-    - [2.2 Use Cases](#22-use-cases)
-  - [3. Functional Requirements](#3-functional-requirements)
-    - [3.1 Artificial Intelligence Model](#31-artificial-intelligence-model)
-      - [➭ 3.1.1 Overview](#-311-overview)
-      - [➭ 3.1.2 Dataset](#-312-dataset)
-      - [➭ 3.1.3 Input](#-313-input)
-      - [➭ 3.1.4 Output](#-314-output)
-    - [Output Process Flowchart](#output-process-flowchart)
-    - [3.2 Mobile Application](#32-mobile-application)
-      - [➭ 3.2.1 Overview](#-321-overview)
-      - [➭ 3.2.2 User Registration and Authentication](#-322-user-registration-and-authentication)
-      - [➭ 3.2.3 Login](#-323-login)
-      - [➭ 3.2.4 Home Screen](#-324-home-screen)
-      - [➭ 3.2.5 Progress Monitoring](#-325-progress-monitoring)
-      - [➭ 3.2.6 Tutorial Section](#-326-tutorial-section)
-      - [➭ 3.2.7 Profile Management](#-327-profile-management)
-      - [➭ 3.2.8 Export Video](#-328-export-video)
-      - [➭ 3.2.9 Notifications](#-329-notifications)
-      - [➭ 3.2.10 User Workflow](#-3210-user-workflow)
-  - [4 Non-Functional Requirements](#4-non-functional-requirements)
-    - [4.1 Data Security](#41-data-security)
-    - [4.2 App Performance and Time Responsiveness](#42-app-performance-and-time-responsiveness)
-  - [5. System Architecture](#5-system-architecture)
-    - [5.1 Overview](#51-overview)
-    - [5.2 System Architecture Diagram](#52-system-architecture-diagram)
-    - [5.3 Data Preprocessing](#53-data-preprocessing)
-      - [**Key Steps in Data Preprocessing:**](#key-steps-in-data-preprocessing)
-    - [5.4 Model Development and Evaluation](#54-model-development-and-evaluation)
-      - [5.4.1 Model Architecture](#541-model-architecture)
-      - [5.4.2 Model Compilation](#542-model-compilation)
-      - [5.4.3 Training and Evaluation](#543-training-and-evaluation)
-      - [5.4.4 Model Evaluation](#544-model-evaluation)
-    - [5.5 Why deep learning?](#55-why-deep-learning)
-    - [5.6 Why TensorFlow and MediaPipe?](#56-why-tensorflow-and-mediapipe)
-    - [5.7 Why Flutter?](#57-why-flutter)
+    - [1.3 Stakeholders](#13-stakeholders)
+    - [1.4 Milestones and Deliverables](#14-milestones-and-deliverables)
+  - [2. Project Scope](#2-project-scope)
+    - [2.1 The Application](#21-the-application)
+      - [➭ 2.1.1 The Marketplace](#-211-the-marketplace)
+      - [➭ 2.1.2 The Features](#-212-the-features)
+      - [➭ 2.1.3 Included Advertising](#-213-included-advertising)
+    - [2.2 The Artificial Intelligence](#22-the-artificial-intelligence)
+      - [➭ 2.2.1 The Database](#-221-the-database)
+      - [➭ 2.2.2 The Output](#-222-the-output)
+  - [3. Personas and Use Cases](#3-personas-and-use-cases)
+    - [3.1 Personas](#31-personas)
+      - [➭ 3.1.1 Victor - The newbie](#-311-victor---the-newbie)
+      - [➭ 3.1.2 Fabrice - The experienced](#-312-fabrice---the-experienced)
+      - [➭ 3.1.3 Tiffany - The athlete](#-313-tiffany---the-athlete)
+      - [➭ 3.1.4 Brutia - The influencer](#-314-brutia---the-influencer)
+    - [3.2 Use Cases](#32-use-cases)
+  - [4. Functional Requirements](#4-functional-requirements)
+    - [4.1 Artificial Intelligence Model](#41-artificial-intelligence-model)
+      - [➭ 4.1.1 Overview](#-411-overview)
+      - [➭ 4.1.2 Dataset](#-412-dataset)
+      - [➭ 4.1.3 Input](#-413-input)
+      - [➭ 4.1.4 Output](#-414-output)
+    - [4.2 Mobile Application](#42-mobile-application)
+      - [➭ 4.2.1 Overview](#-421-overview)
+      - [➭ 4.2.2 User Registration and Authentication](#-422-user-registration-and-authentication)
+      - [➭ 4.2.3 Login](#-423-login)
+      - [➭ 4.2.4 Home Screen](#-424-home-screen)
+      - [➭ 4.2.5 Progress Monitoring](#-425-progress-monitoring)
+      - [➭ 4.2.6 Tutorial Section](#-426-tutorial-section)
+      - [➭ 4.2.7 Profile Management](#-427-profile-management)
+      - [➭ 4.2.8 Export Video](#-428-export-video)
+      - [➭ 4.2.9 Notifications](#-429-notifications)
+      - [➭ 4.2.10 User Workflow](#-4210-user-workflow)
+  - [5. Non-Functional Requirements](#5-non-functional-requirements)
+    - [5.1 Data Security](#51-data-security)
+    - [5.2 App Performance and Time Responsiveness](#52-app-performance-and-time-responsiveness)
+  - [6. System Architecture](#6-system-architecture)
+    - [6.1 Overview](#61-overview)
+    - [6.2 System Architecture Diagram](#62-system-architecture-diagram)
+    - [6.3 Data Preprocessing](#63-data-preprocessing)
+    - [6.4 Model Development and Evaluation](#64-model-development-and-evaluation)
+      - [➭ 6.4.1 Model Architecture](#-641-model-architecture)
+      - [➭ 6.4.2 Model Compilation](#-642-model-compilation)
+      - [➭ 6.4.3 Training and Evaluation](#-643-training-and-evaluation)
+      - [➭ 6.4.4 Model Evaluation](#-644-model-evaluation)
+    - [6.5 Why deep learning?](#65-why-deep-learning)
+    - [6.6 Why TensorFlow and MediaPipe?](#66-why-tensorflow-and-mediapipe)
+    - [6.7 Why Flutter?](#67-why-flutter)
+  - [7. Testing Strategy](#7-testing-strategy)
+  - [8. Management](#8-management)
+    - [8.1 Planning](#81-planning)
+    - [8.2 Actual Performance](#82-actual-performance)
+  - [9. Next Steps](#9-next-steps)
+    - [9.1 Dataset](#91-dataset)
+    - [9.2 Mobile Application](#92-mobile-application)
+    - [9.3 Testing Strategy](#93-testing-strategy)
+    - [9.4 Deployment](#94-deployment)
 
 ## 1. Introduction
 
@@ -60,8 +72,6 @@
 
 Since my earliest childhood, sport has been a massive pillar of my life. And with time, the hobby became a real ambition of performance. \
 To achieve my goals, I had to get the most out of my body while preventing injury. On that task, I was helped by coaches who taught me the right techniques and the right exercises to mix performance and safety. 
-
-<br>
 
 Unfortunately, I never went to the Olympics but at least I never got seriously injured. Time flies and for a few years, I started to go to the gym. \
 This time, I didn't have a coach and I had to learn by myself. Quickly, the first pains and injuries appeared while my progresses were on the ups and downs. It didn't took me long to understand that my problem was the lack of technique. I would have love to have a coach but I couldn't afford it.
@@ -82,44 +92,7 @@ An app that will ask you to film yourself while doing an exercise and then compa
 
 ---
 
-### 1.3 Project Scope
-
-#### 1.3.1 The Application
-
-➭ <u> The Marketplace </u>
-
-Following the technology choice of using Flutter, the app will be portable on both the Apple Store and the Google Play Store.
-
-➭ <u> The Features </u>
-
-The application will be fluid and user-friendly to fullfil UI and UX requirements. It will contain two main features:
-- An AI that will analyse your video and offer feedback to refine your technique.
-- A follow-up on your previous injuries with a set of exercises and warm-ups tailored to address any recurring pains or vulnerable body parts.
-
-➭ <u> Included Advertising </u>
-
-One of the biggest challenge will be to include advertising in the app. It will be necessary to find a way to make it non-intrusive and to not affect the user experience.
-
-#### 1.3.2 The Artificial Intelligence
-
-➭ <u> The Database </u>
-
-The AI will be trained using a database of videos featuring international powerlifting athletes as well as a database of videos demonstrating various incorrect techniques.
-> *💡 As many as possible for each movement to detect all kind of mistakes.* 
-
-To begin, we'll concentrate on the three key movements of powerlifting: **Squat**, **Bench Press** and **Deadlift**. 
-
-➭ <u> The Output </u>
-
-When the AI has finished analysing the video, it will output a list of mistakes.
-The output will be a basic error message saying which part(s) of the movement is incorrect but without precising why it's incorrect. \
-An example of output would be: "Wrong back position".
-> *🔮 Depending on the evolution of the project and of the complexity, the goal would be to have a generative AI that will provide more details on the mistake you are making. \
-> For instance: "Your back isn't sufficiently arched, ending up minimising the impact of your leg drive."*
-
----
-
-### 1.4 Stakeholders
+### 1.3 Stakeholders
 
 | Role | Name | Contact |
 | --- | --- | --- |
@@ -128,7 +101,7 @@ An example of output would be: "Wrong back position".
 
 ---
 
-### 1.5 Milestones and Deliverables
+### 1.4 Milestones and Deliverables
 
 **Project Phases:**
 - **Phase 1:** Concludes on September 11th, 2024, with a presentation to a jury.
@@ -157,29 +130,66 @@ An example of output would be: "Wrong back position".
 
 ---
 
-## 2. Personas and Use Cases
+## 2. Project Scope
 
-### 2.1 Personas
+### 2.1 The Application
 
-#### ➭ 2.1.1 Victor - The newbie
+#### ➭ 2.1.1 The Marketplace
+
+Following the technology choice of using Flutter, the app will be portable on both the Apple Store and the Google Play Store.
+
+#### ➭ 2.1.2 The Features
+
+The application will be fluid and user-friendly to fullfil UI and UX requirements. It will contain two main features:
+- An AI that will analyse your video and offer feedback to refine your technique.
+- A follow-up on your previous injuries with a set of exercises and warm-ups tailored to address any recurring pains or vulnerable body parts.
+
+#### ➭ 2.1.3 Included Advertising
+
+One of the biggest challenge will be to include advertising in the app. It will be necessary to find a way to make it non-intrusive and to not affect the user experience.
+
+### 2.2 The Artificial Intelligence
+
+#### ➭ 2.2.1 The Database
+
+The AI will be trained using a database of videos featuring international powerlifting athletes as well as a database of videos demonstrating various incorrect techniques.
+> *💡 As many as possible for each movement to detect all kind of mistakes.* 
+
+To begin, we'll concentrate on the three key movements of powerlifting: **Squat**, **Bench Press** and **Deadlift**. 
+
+#### ➭ 2.2.2 The Output
+
+When the AI has finished analysing the video, it will output a list of mistakes.
+The output will be a basic error message saying which part(s) of the movement is incorrect but without precising why it's incorrect. \
+An example of output would be: "Wrong back position".
+> *🔮 Depending on the evolution of the project and of the complexity, the goal would be to have a generative AI that will provide more details on the mistake you are making. \
+> For instance: "Your back isn't sufficiently arched, ending up minimising the impact of your leg drive."*
+
+---
+
+## 3. Personas and Use Cases
+
+### 3.1 Personas
+
+#### ➭ 3.1.1 Victor - The newbie
 
 ![Victor](./images/personas/victor.png)
 
-#### ➭ 2.1.2 Fabrice - The experienced
+#### ➭ 3.1.2 Fabrice - The experienced
 
 ![Fabrice](./images/personas/fabrice.png)
 
-#### ➭ 2.1.3 Tiffany - The athlete
+#### ➭ 3.1.3 Tiffany - The athlete
 
 ![Tiffany](./images/personas/tiffany.png)
 
-#### ➭ 2.1.4 Brutia - The influencer
+#### ➭ 3.1.4 Brutia - The influencer
 
 ![Brutia](./images/personas/brutia.png)
 
 ---
 
-### 2.2 Use Cases
+### 3.2 Use Cases
 
 | **Use Case**                  | **Description**                                                         | **Actors**       | **Preconditions**                                                       | **Flow**                                                                                                                                                    | **Postconditions**                                |
 |-------------------------------|-------------------------------------------------------------------------|-----------------|--------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------|
@@ -196,20 +206,20 @@ An example of output would be: "Wrong back position".
 
 ---
 
-## 3. Functional Requirements
+## 4. Functional Requirements
 
-### 3.1 Artificial Intelligence Model
+### 4.1 Artificial Intelligence Model
 
-#### ➭ 3.1.1 Overview
+#### ➭ 4.1.1 Overview
 The AI model in **LiftGuard** is designed to analyze exercise videos uploaded by the user and provide detailed feedback on the user's form and technique. This functionality aims to help users optimize muscle activation, prevent injuries, and accelerate their progress in powerlifting exercises.
 
 As an initial version (MVP) and potentially until the end of the first phase, the AI model will focus exclusively on analyzing squats. New models for other exercises will be added in future phases.
 
-#### ➭ 3.1.2 Dataset
+#### ➭ 4.1.2 Dataset
 To train the model and make it as accurate as possible, a dataset of squat videos with correct and incorrect form examples will be required. Each video will be labeled with the specific mistakes made by the user, allowing the AI model to learn and identify these mistakes in new videos. \
 Building this dataset will involve asking actual athletes to perform squats with various mistakes, recording these sessions, and labeling the videos accordingly.
 
-#### ➭ 3.1.3 Input
+#### ➭ 4.1.3 Input
 The primary input for the AI model is a video uploaded by the user. The video should clearly capture the user's exercise performance from a side or half-side angle, allowing the AI to accurately assess their form and technique. The model will analyze only one repetition per video. If the provided video contains multiple repetitions, only the first one will be analyzed.
 
 Input details:
@@ -222,7 +232,7 @@ Input details:
 
 <img src="./images/angle.png" height="200">
 
-#### ➭ 3.1.4 Output
+#### ➭ 4.1.4 Output
 
 The output of the AI model consists of detailed feedback on the user's exercise performance. This feedback includes:
 
@@ -246,7 +256,7 @@ For a squat, the outputs will be:
 
 The AI model assigns a label only if it is at least 75% confident in its assessment. If multiple labels are above 75% confidence, all relevant labels are assigned, except if the "Correct" label is also above 75% confidence and higher than any other label, in which case only "Correct" is assigned. If no labels are above 75% confidence, the output is "Incorrect video."
 
-### <u>Output Process Flowchart</u>
+<big><u>**Output Process Flowchart**</u></big>
 
 ![Output Process Flowchart](./images/flowcharts/output.png)
 
@@ -254,12 +264,12 @@ The feedback will be presented to the user through the mobile application interf
 
 ---
 
-### 3.2 Mobile Application
+### 4.2 Mobile Application
 
-#### ➭ 3.2.1 Overview
+#### ➭ 4.2.1 Overview
 The **LiftGuard** mobile application serves as the primary interface for users to interact with the AI model, upload exercise videos, receive feedback, track progress, set goals, and engage with the community. The application is designed to be user-friendly, intuitive, and engaging, providing a seamless experience for users to optimize their exercise performance.
 
-#### ➭ 3.2.2 User Registration and Authentication
+#### ➭ 4.2.2 User Registration and Authentication
 The registration and authentication process ensures secure access to the application while collecting essential user information.
 
 **Fields Required:**
@@ -283,7 +293,7 @@ The registration and authentication process ensures secure access to the applica
   - Optional: Personal Record (PR) tracking
   - Profile Picture upload
 
-#### ➭ 3.2.3 Login
+#### ➭ 4.2.3 Login
 The login functionality allows users to securely access their accounts.
 
 **Fields Required:**
@@ -295,7 +305,7 @@ The login functionality allows users to securely access their accounts.
   - Remember Me option for easier login
   - Sign Up link for new users
 
-#### ➭ 3.2.4 Home Screen
+#### ➭ 4.2.4 Home Screen
 The home screen provides users with an overview of their progress and easy access to key features.
 
 **Features:**
@@ -303,7 +313,7 @@ The home screen provides users with an overview of their progress and easy acces
   - **Progress Graph:** Visual representation of progress over time.
   - **Upload Video Button:** Direct access to video upload functionality.
 
-#### ➭ 3.2.5 Progress Monitoring
+#### ➭ 4.2.5 Progress Monitoring
 The application provides tools to track and visualize user progress over time.
 
 **Features:**
@@ -311,7 +321,7 @@ The application provides tools to track and visualize user progress over time.
   - **Performance Metrics:** Detailed analysis of user's performance trends.
   - **Goals Tracking:** Monitor progress towards set fitness goals.
 
-#### ➭ 3.2.6 Tutorial Section
+#### ➭ 4.2.6 Tutorial Section
 The tutorial section provides instructional content to help users perform exercises correctly.
 
 **Available Tutorials:**
@@ -324,7 +334,7 @@ The tutorial section provides instructional content to help users perform exerci
   - Video demonstrations
   - Common mistakes and tips
 
-#### ➭ 3.2.7 Profile Management
+#### ➭ 4.2.7 Profile Management
 The profile management section allows users to view and edit their personal information and settings.
 
 **Features:**
@@ -337,7 +347,7 @@ The profile management section allows users to view and edit their personal info
   - **Activity Log:** View history of uploaded videos and received feedback.
   - **Privacy Settings:** Control who can view the user's progress and shared content.
 
-#### ➭ 3.2.8 Export Video
+#### ➭ 4.2.8 Export Video
 Users can export their analyzed exercise videos for sharing or further analysis.
 
 **Features:**
@@ -346,7 +356,7 @@ Users can export their analyzed exercise videos for sharing or further analysis.
   - **Download Options:** Users can download the video to their device for offline access or further analysis.
   - **Watermarking:** Include a **LiftGuard** watermark on exported videos to promote the application.
 
-#### ➭ 3.2.9 Notifications
+#### ➭ 4.2.9 Notifications
 Keep users informed about their activity and application updates.
 
 **Features:**
@@ -356,7 +366,7 @@ Keep users informed about their activity and application updates.
 
  **App Updates:** Inform users about new features and updates.
 
-####  ➭ 3.2.10 User Workflow
+####  ➭ 4.2.10 User Workflow
 ```mermaid
 graph TD
     A[Open LiftGuard App] --> B[Registration Page]
@@ -377,9 +387,9 @@ graph TD
 
 ---
 
-## 4 Non-Functional Requirements
+## 5. Non-Functional Requirements
 
-### 4.1 Data Security
+### 5.1 Data Security
 Data security is paramount to protect users' personal information and exercise data.
 
 **Measures:**
@@ -391,7 +401,7 @@ Data security is paramount to protect users' personal information and exercise d
 
 ---
 
-### 4.2 App Performance and Time Responsiveness
+### 5.2 App Performance and Time Responsiveness
 The performance and responsiveness of the app are critical to providing a smooth user experience.
 
 **Targets:**
@@ -406,9 +416,9 @@ The performance and responsiveness of the app are critical to providing a smooth
 
 ---
 
-## 5. System Architecture
+## 6. System Architecture
 
-### 5.1 Overview
+### 6.1 Overview
 
 The LiftGuard system is composed of the following components:
 
@@ -421,7 +431,7 @@ The LiftGuard system is composed of the following components:
 
 ---
 
-### 5.2 System Architecture Diagram
+### 6.2 System Architecture Diagram
 
 ```mermaid
 flowchart TD
@@ -481,11 +491,11 @@ flowchart TD
 
 ---
 
-### 5.3 Data Preprocessing
+### 6.3 Data Preprocessing
 
 In order to effectively train and utilize the AI model for exercise video analysis, several preprocessing steps must be performed on the input data. This preprocessing ensures that the model receives clean and standardized data, allowing for accurate analysis of exercise performance. The process involves multiple stages, from extracting individual video frames to preparing the data for model training.
 
-#### **Key Steps in Data Preprocessing:**
+<big><u>**Key Steps in Data Preprocessing:**</u></big>
 
 1. **Video Frame Extraction:**  
    The first step is to break the video into individual frames, allowing the AI model to analyze each frame independently. We extract 30 frames by second for a length of 5 seconds. This is done using OpenCV, which efficiently handles frame extraction.
@@ -524,9 +534,9 @@ By preparing the data in this structured manner, the AI model can more effective
 
 ---
 
-### 5.4 Model Development and Evaluation
+### 6.4 Model Development and Evaluation
 
-#### 5.4.1 Model Architecture
+#### ➭ 6.4.1 Model Architecture
 
 To develop the AI model, we employ a combination of **TimeDistributed Convolutional Neural Networks (CNNs)** and **Bidirectional Long Short-Term Memory (LSTM)** networks. Here's how the architecture is structured:
 
@@ -556,7 +566,7 @@ To develop the AI model, we employ a combination of **TimeDistributed Convolutio
 6. **Dropout Layers for Regularization**  
    To prevent overfitting, **Dropout layers** are added with a dropout rate of 50%. These layers randomly deactivate a fraction of the neurons during training, encouraging the model to learn more robust features.
 
-#### 5.4.2 Model Compilation
+#### ➭ 6.4.2 Model Compilation
 
 The model is compiled using the **Adam optimizer** for adaptive learning, and the loss function is set to **categorical cross-entropy**, appropriate for multi-class classification problems. The model also tracks **accuracy** as a performance metric.
 
@@ -564,7 +574,7 @@ The model is compiled using the **Adam optimizer** for adaptive learning, and th
 model.compile(optimizer=Adam(), loss='categorical_crossentropy', metrics=['accuracy'])
 ```
 
-#### 5.4.3 Training and Evaluation
+#### ➭ 6.4.3 Training and Evaluation
 
 The training process involves fitting the model to the training data, using **X_train** for input frames and **y_train** for the corresponding labels (e.g., form errors). The training process is validated on **X_test** and **y_test** to ensure the model's performance generalizes well to new, unseen data.
 
@@ -572,7 +582,7 @@ The training process involves fitting the model to the training data, using **X_
 history = model.fit(X_train, y_train, validation_data=(X_test, y_test), epochs=10)
 ```
 
-#### 5.4.4 Model Evaluation
+#### ➭ 6.4.4 Model Evaluation
 
 Once the model is trained, it is evaluated on the test data to measure its performance in terms of **accuracy** and **loss**.
 
@@ -584,7 +594,7 @@ print(f"Test accuracy: {accuracy}")
 
 The model's accuracy metric gives an indication of how well it can detect form errors in new videos, and the loss function provides a measure of prediction error.
 
-### 5.5 Why deep learning?
+### 6.5 Why deep learning?
 
 While similar projects exist that do not rely on deep learning, such as [this example](https://huggingface.co/spaces/Kunal7/squats-analysis/tree/main), deep learning brings several key advantages.
 
@@ -594,13 +604,13 @@ Secondly, deep learning offers greater flexibility and adaptability to account f
 
 Finally, deep learning models are robust to variations in camera angles, lighting, and distance. The model can generalize well across different perspectives, allowing users more freedom in how they record their movements while maintaining accuracy in performance feedback.
 
-### 5.6 Why TensorFlow and MediaPipe?
+### 6.6 Why TensorFlow and MediaPipe?
 
 TensorFlow and MediaPipe complement each other in building efficient and scalable AI models for real-time applications. TensorFlow provides the deep learning backbone, offering robust tools for training and deploying complex models, such as pose estimation and movement analysis. \
 Its ability to integrate with TensorFlow Lite allows the AI model in LiftGuard to run efficiently on mobile devices. MediaPipe, on the other hand, excels at real-time video and image processing. With its pre-built pipelines for hand, body, and face tracking, MediaPipe simplifies the task of extracting relevant key points from videos, which TensorFlow can then use for further analysis. \
 Together, TensorFlow and MediaPipe enable LiftGuard to deliver accurate performance feedback with minimal latency across various devices.
 
-### 5.7 Why Flutter?
+### 6.7 Why Flutter?
 
 **Flutter** was chosen as the framework for developing the **LiftGuard** mobile application due to its versatility, performance, and ability to support a seamless user experience across multiple platforms. Below are the key reasons for selecting Flutter:
 
@@ -626,3 +636,51 @@ Together, TensorFlow and MediaPipe enable LiftGuard to deliver accurate performa
    Although Flutter is cross-platform, it provides easy access to **platform-specific APIs** via **platform channels**. This ensures that **LiftGuard** can use device-specific functionalities like the camera for video capture, storage access for media, and notifications without sacrificing the user experience or relying on third-party integrations.
 
 In summary, **Flutter** offers the best combination of performance, cross-platform capabilities, and development efficiency for **LiftGuard**, ensuring that the app is both scalable and highly performant across different devices and operating systems.
+
+## 7. Testing Strategy
+
+## 8. Management
+
+### 8.1 Planning
+
+**Week 1 (07/24 - 07/30):** Define the scope and complete the functional specifications.  
+**Week 2 (08/01 - 08/07):** Research useful frameworks and similar projects, and finalize the technical specifications.  
+**Week 3 (08/08 - 08/14):** Begin learning and using Python for video and image processing.  
+**Week 4 (08/15 - 08/21):** Record the initial videos for the dataset and start data preprocessing.  
+**Week 5 (08/22 - 08/28):** Complete data preprocessing and model development.  
+**Week 6 (08/29 - 09/04):** Train the model, evaluate its performance, and adjust if necessary.  
+**Week 7 (09/05 - 09/11):** Begin development of the mobile application.  
+**Week 8 (09/12 - 09/18):** Integrate the AI model into the mobile application.  
+**Week 9 (09/19 - 09/25):** Set up Firebase and continue the development of the mobile application as much as possible.  
+**Week 10 (09/26 - 09/28):** Write the final report.
+
+### 8.2 Actual Performance
+
+**Week 1 (07/24 - 07/30):** Timeline followed as planned.  
+**Week 2 (08/01 - 08/07):** Timeline followed as planned.  
+**Week 3 (08/08 - 08/14):** Timeline followed, but extra time was left unutilized.  
+**Week 4 (08/15 - 08/21):** Initial videos were recorded, and data preprocessing began. Encountered issues with data management: RAM was saturating during video processing, and no solution was found. Project slightly behind schedule.  
+**Week 5 (08/22 - 08/28):** Implemented multithreading to manage data preprocessing. The model was developed and training began, but RAM saturation persisted, preventing any results from being returned. Progress is slightly behind but manageable.  
+**Week 6 (08/29 - 09/04):** Continued troubleshooting RAM saturation by modifying the model, reducing frame sizes, and adjusting batch sizes. No results yet, but a potential solution was identified by the end of the week, awaiting implementation.  
+**Week 7 (09/05 - 09/11):** Reworked the preprocessing system to replace actual images with MediaPipe keypoints, significantly reducing RAM usage. The model was trained and evaluated, but the results were highly inaccurate, as the model failed to learn anything meaningful.  
+**Week 8 (09/12 - 09/18):** Multiple hypotheses were considered to explain the model’s failure, with the most likely being that the model was too complex for the dataset. The model was simplified and retrained, but results remained unchanged. Preprocessing was reworked again with no success. The problem probably lies in the lack of diversity and quantity in the dataset.
+**Week 9 (09/19 - 09/25):** The AI model was abandoned, and focus shifted to analyzing videos directly via MediaPipe, with an attempt to connect it to a basic Flutter interface. Results were unsatisfactory.  
+**Week 10 (09/26 - 09/28):** Final report was written.
+
+## 9. Next Steps
+
+### 9.1 Dataset
+
+The primary issue encountered during the project was the lack of a diverse and extensive dataset. To improve the AI model's performance, it's mandatory to collect a more comprehensive dataset with a wider range of body types, lifting techniques, and form errors. This dataset should include videos from various angles, lighting conditions, and environments to ensure the model can generalize well to different scenarios.
+
+### 9.2 Mobile Application
+
+The development of the mobile application hasn't started yet as it was relying on the successful completion of the AI model. When the results of the model will be considered satisfactory, the development of the mobile application will begin. The application should include features such as video upload, feedback display, progress tracking, community engagement, and user profile management. The UI/UX design should be intuitive, engaging, and responsive to provide a seamless user experience. It's far from being the hardest part of the project but it will be time-consuming.
+
+### 9.3 Testing Strategy
+
+At the moment of writing, the testing strategy hasn't been implemented yet. However, it will be crucial to ensure the system's reliability, accuracy, and performance. Testing should cover various aspects, including the AI model's accuracy, the mobile application's functionality, data security, and user experience.
+
+### 9.4 Deployment
+
+Once the AI model and mobile application are ready, the next step is to deploy the system for public use. This involves setting up cloud infrastructure to host the AI model, database, and backend services. Firebase can be used for hosting the database and backend services, while the AI model can be deployed on cloud platforms like Google Cloud or AWS. The mobile application will first be published on the Google Play Store as it is quicker to get approved than the Apple App Store. But as soon as possible, the app will be available on both platforms. The goal is to collect feedback from users and iterate on the system to improve its performance and user experience.
