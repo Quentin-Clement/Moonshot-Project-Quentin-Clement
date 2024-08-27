@@ -1,43 +1,43 @@
-## Functional Specification
+# Functional Specification
 
 ### Table of Contents
 - [Functional Specification](#functional-specification)
-  - [Table of Contents](#table-of-contents)
-- [1. Introduction](#1-introduction)
-  - [1.1 Project Overview](#11-project-overview)
-  - [1.2 Executive Summary](#12-executive-summary)
-  - [1.3 Purpose and Scope](#13-purpose-and-scope)
-  - [1.4 Intended Audience](#14-intended-audience)
-  - [1.5 Milestones and Deliverables](#15-milestones-and-deliverables)
-  - [1.6 Glossary](#16-glossary)
-- [2. Personas and Use Cases](#2-personas-and-use-cases)
-  - [2.1 Personas](#21-personas)
-    - [➭ 2.1.1 Victor - The newbie](#-211-victor---the-newbie)
-    - [➭ 2.1.2 Fabrice - The experienced](#-212-fabrice---the-experienced)
-    - [➭ 2.1.3 Tiffany - The athlete](#-213-tiffany---the-athlete)
-    - [➭ 2.1.4 Brutia - The influencer](#-214-brutia---the-influencer)
-  - [2.2 Use Cases](#22-use-cases)
-- [3. Functional Requirements](#3-functional-requirements)
-  - [3.1 Artificial Intelligence Model](#31-artificial-intelligence-model)
-    - [➭ 3.1.1 Overview](#-311-overview)
-    - [➭ 3.1.2 Dataset](#-312-dataset)
-    - [➭ 3.1.3 Input](#-313-input)
-    - [➭ 3.1.4 Output](#-314-output)
-  - [Output Process Flowchart](#output-process-flowchart)
-  - [3.2 Mobile Application](#32-mobile-application)
-    - [➭ 3.2.1 Overview](#-321-overview)
-    - [➭ 3.2.2 User Registration and Authentication](#-322-user-registration-and-authentication)
-    - [➭ 3.2.3 Login](#-323-login)
-    - [➭ 3.2.4 Home Screen](#-324-home-screen)
-    - [➭ 3.2.5 Progress Monitoring](#-325-progress-monitoring)
-    - [➭ 3.2.6 Tutorial Section](#-326-tutorial-section)
-    - [➭ 3.2.7 Profile Management](#-327-profile-management)
-    - [➭ 3.2.8 Export Video](#-328-export-video)
-    - [➭ 3.2.9 Notifications](#-329-notifications)
-    - [➭ 3.2.10 User Workflow](#-3210-user-workflow)
-- [4 Non-Functional Requirements](#4-non-functional-requirements)
-  - [4.1 Data Security](#41-data-security)
-  - [4.2 App Performance and Time Responsiveness](#42-app-performance-and-time-responsiveness)
+    - [Table of Contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+    - [1.1 Project Overview](#11-project-overview)
+    - [1.2 Executive Summary](#12-executive-summary)
+    - [1.3 Purpose and Scope](#13-purpose-and-scope)
+    - [1.4 Intended Audience](#14-intended-audience)
+    - [1.5 Milestones and Deliverables](#15-milestones-and-deliverables)
+    - [1.6 Glossary](#16-glossary)
+  - [2. Personas and Use Cases](#2-personas-and-use-cases)
+    - [2.1 Personas](#21-personas)
+      - [➭ 2.1.1 Victor - The newbie](#-211-victor---the-newbie)
+      - [➭ 2.1.2 Fabrice - The experienced](#-212-fabrice---the-experienced)
+      - [➭ 2.1.3 Tiffany - The athlete](#-213-tiffany---the-athlete)
+      - [➭ 2.1.4 Brutia - The influencer](#-214-brutia---the-influencer)
+    - [2.2 Use Cases](#22-use-cases)
+  - [3. Functional Requirements](#3-functional-requirements)
+    - [3.1 Artificial Intelligence Model](#31-artificial-intelligence-model)
+      - [➭ 3.1.1 Overview](#-311-overview)
+      - [➭ 3.1.2 Dataset](#-312-dataset)
+      - [➭ 3.1.3 Input](#-313-input)
+      - [➭ 3.1.4 Output](#-314-output)
+    - [Output Process Flowchart](#output-process-flowchart)
+    - [3.2 Mobile Application](#32-mobile-application)
+      - [➭ 3.2.1 Overview](#-321-overview)
+      - [➭ 3.2.2 User Registration and Authentication](#-322-user-registration-and-authentication)
+      - [➭ 3.2.3 Login](#-323-login)
+      - [➭ 3.2.4 Home Screen](#-324-home-screen)
+      - [➭ 3.2.5 Progress Monitoring](#-325-progress-monitoring)
+      - [➭ 3.2.6 Tutorial Section](#-326-tutorial-section)
+      - [➭ 3.2.7 Profile Management](#-327-profile-management)
+      - [➭ 3.2.8 Export Video](#-328-export-video)
+      - [➭ 3.2.9 Notifications](#-329-notifications)
+      - [➭ 3.2.10 User Workflow](#-3210-user-workflow)
+  - [4 Non-Functional Requirements](#4-non-functional-requirements)
+    - [4.1 Data Security](#41-data-security)
+    - [4.2 App Performance and Time Responsiveness](#42-app-performance-and-time-responsiveness)
 
 ---
 
@@ -132,19 +132,19 @@ This document is used as a reference for the development team, including tech le
 
 #### ➭ 2.1.1 Victor - The newbie
 
-![Victor](/documents/images/personas/victor.png)
+![Victor](./images/personas/victor.png)
 
 #### ➭ 2.1.2 Fabrice - The experienced
 
-![Fabrice](/documents/images/personas/fabrice.png)
+![Fabrice](./images/personas/fabrice.png)
 
 #### ➭ 2.1.3 Tiffany - The athlete
 
-![Tiffany](/documents/images/personas/tiffany.png)
+![Tiffany](./images/personas/tiffany.png)
 
 #### ➭ 2.1.4 Brutia - The influencer
 
-![Brutia](/documents/images/personas/brutia.png)
+![Brutia](./images/personas/brutia.png)
 
 ---
 
@@ -156,9 +156,7 @@ This document is used as a reference for the development team, including tech le
 | **User Login**                | An existing user logs into the **LiftGuard** application.                | User            | The user has a registered and activated account.                        | 1. User opens the **LiftGuard** app.<br>2. User navigates to the login page.<br>3. User enters email and password.<br>4. User clicks the login button.<br>5. System verifies the credentials.<br>6. User is granted access to their account.                                                                                                 | User is logged in and directed to the home screen. |
 | **Upload Exercise Video**     | A user uploads a video of their exercise for analysis.                   | User            | The user is logged in and has access to the video upload feature.        | 1. User navigates to the video upload section.<br>2. User selects a video from their device.<br>3. User uploads the video to the system.<br>4. System processes the video for analysis.                                                | Video is uploaded and ready for AI analysis.       |
 | **AI Feedback on Exercise**   | The AI model provides feedback on the user's uploaded exercise video.    | User, AI System | The user has uploaded an exercise video.                                 | 1. AI system analyzes the uploaded video.<br>2. AI system identifies any issues with the user's form or technique.<br>3. AI system generates feedback.<br>4. User receives feedback on their exercise performance.                                                    | User receives AI-generated feedback on their exercise video. |
-| **View Progress and Analytics**| A user views their exercise progress and analytics over time.            | User            | The user has uploaded multiple
-
- exercise videos and received feedback.    | 1. User navigates to the progress and analytics section.<br>2. System displays graphical representations of the user's progress.<br>3. User reviews their performance metrics and improvement over time.                               | User gains insights into their progress and areas needing improvement. |
+| **View Progress and Analytics**| A user views their exercise progress and analytics over time.            | User            | The user has uploaded multiple exercise videos and received feedback.    | 1. User navigates to the progress and analytics section.<br>2. System displays graphical representations of the user's progress.<br>3. User reviews their performance metrics and improvement over time.                               | User gains insights into their progress and areas needing improvement. |
 | **Set Exercise Goals**        | A user sets personal exercise goals within the application.              | User            | The user is logged in.                                                  | 1. User navigates to the goals section.<br>2. User sets specific exercise goals (e.g., improve squat form, increase bench press weight).<br>3. System saves the user's goals.<br>4. System tracks progress towards these goals.                        | User's goals are saved and tracked by the system.  |
 | **Receive Notifications**     | The user receives notifications about their progress, reminders, and updates. | User, System | The user is logged in and has notifications enabled.                    | 1. System sends notifications about various events (e.g., new feedback, goal progress, app updates).<br>2. User receives and views the notifications.                                                                                         | User stays informed about their progress and important updates. |
 | **Engage with Community**     | Users interact with the community to share progress and tips.            | User, Other Users| The user is logged in and has access to the community feature.           | 1. User navigates to the community section.<br>2. User posts updates, questions, or tips.<br>3. Other users view and respond to the posts.                                                                                                    | User interacts with the community, gaining support and advice. |
@@ -191,7 +189,7 @@ Input details:
 - 🟩 Green areas indicate the optimal angles for analysis.
 - 🟥 Red striped areas indicate the angles that should be avoided.
 
-![Angle](/documents/images/angle.png)
+<img src="./images/angle.png" height="200">
 
 #### ➭ 3.1.4 Output
 
@@ -219,7 +217,7 @@ The AI model assigns a label only if it is at least 75% confident in its assessm
 
 ### <u>Output Process Flowchart</u>
 
-![Output Process Flowchart](/documents/images/flowcharts/output.png)
+![Output Process Flowchart](./images/flowcharts/output.png)
 
 The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
 
