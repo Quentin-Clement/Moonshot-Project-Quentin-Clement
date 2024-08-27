@@ -260,7 +260,7 @@ The AI model assigns a label only if it is at least 75% confident in its assessm
 
 <big><u>**Output Process Flowchart**</u></big>
 
-![Output Process Flowchart](./images/flowcharts/output.png)
+<img src="./images/flowcharts/output.png" height="600">
 
 The feedback will be presented to the user through the mobile application interface, providing actionable insights to improve their form and technique, along with the confidence score for each assessment.
 
@@ -419,7 +419,7 @@ The LiftGuard system is composed of the following components:
 
 ### 6.2 System Architecture Diagram
 
-![System Architecture Diagram](./images/flowcharts/sytem-architecture.png)
+![System Architecture Diagram](./images/flowcharts/system-architecture.png)
 
 ---
 
