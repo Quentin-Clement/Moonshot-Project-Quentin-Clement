@@ -82,6 +82,7 @@ knees_over_toes_keypoints_detected = False
 
 # Process each frame
 def process_frame(results):
+    global initial_hips_height, initial_left_foot, initial_right_foot
     global consecutive_sufficient_depth_count, consecutive_knee_cave_count, consecutive_knees_over_toes_count
     global sufficient_depth_detected, knee_cave_detected, knees_over_toes_detected
     global depth_keypoints_detected, knee_cave_keypoints_detected, knees_over_toes_keypoints_detected
@@ -129,8 +130,8 @@ def process_frame(results):
             else:
                 consecutive_knees_over_toes_count = 0
 
-# Main function to open camera and detect squat initiation, then check conditions
 def main():
+    global initial_hips_height, initial_left_foot, initial_right_foot  # Declare these as global to modify them here
     with mp_holistic.Holistic(min_detection_confidence=0.5, min_tracking_confidence=0.5) as holistic:
         cap = cv2.VideoCapture(0)
         squat_started = False
@@ -144,6 +145,10 @@ def main():
             image, results = mediapipe_detection(frame, holistic)
 
             if results.pose_landmarks:
+
+                # Draw landmarks
+                mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS)
+                
                 # Extract current positions
                 left_hip = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_HIP]
                 right_hip = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_HIP]
@@ -177,9 +182,6 @@ def main():
                 # If squat has started, check conditions for 5 seconds
                 if squat_started:
                     process_frame(results)
-                    
-                    # Draw landmarks
-                    mp_drawing.draw_landmarks(image, results.pose_landmarks, mp_holistic.POSE_CONNECTIONS)
 
                     # Stop checking after CHECK_DURATION seconds
                     if (time.time() - start_time) > CHECK_DURATION:
