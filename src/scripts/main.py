@@ -94,23 +94,27 @@ def main():
             else:
                 knee_cave_detected_time = None  # Reset if no knee cave detected
 
-            # Display the result for depth
+            # Determine colors and display the result for depth
             if depth_detected_time and (time.time() - depth_detected_time) < DISPLAY_DURATION:
-                cv2.putText(image, "Depth Sufficient: True", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+                color = (0, 255, 0)  # Green for True
+                cv2.putText(image, "Depth Sufficient: True", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
             else:
-                cv2.putText(image, f"Depth Sufficient: {sufficient_depth_detected}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+                color = (0, 255, 0) if sufficient_depth_detected else (0, 0, 255)  # Green for True, Red for False
+                cv2.putText(image, f"Depth Sufficient: {sufficient_depth_detected}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
 
-            # Display the result for knee cave
+            # Determine colors and display the result for knee cave (reversed color logic)
             if knee_cave_detected_time and (time.time() - knee_cave_detected_time) < DISPLAY_DURATION:
-                cv2.putText(image, "Knee Cave Detected: True", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+                color = (0, 0, 255)  # Red for True
+                cv2.putText(image, "Knee Cave Detected: True", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
             else:
-                cv2.putText(image, f"Knee Cave Detected: {knee_cave_detected}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+                color = (0, 0, 255) if knee_cave_detected else (0, 255, 0)  # Red for True, Green for False
+                cv2.putText(image, f"Knee Cave Detected: {knee_cave_detected}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, color, 2)
 
             # Display missing keypoints messages on the frame if any
             if keypoints_detection_message:
-                y_offset = 150  # Starting y-coordinate for text display
+                y_offset = 50  # Starting y-coordinate for text display
                 for line in keypoints_detection_message:
-                    cv2.putText(image, line, (30, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+                    cv2.putText(image, line, (1250, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
                     y_offset += 30
 
         # Show the frame with keypoints and any messages

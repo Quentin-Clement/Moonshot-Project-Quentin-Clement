@@ -89,7 +89,7 @@ def is_depth_sufficient(results):
     right_hip = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_HIP]
     left_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_KNEE]
     right_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE]
-    hips_height = (left_hip.y + right_hip.y) / 2
+    hips_height = ((left_hip.y + right_hip.y) / 2) + 0.05  # Subtract a small value to allow for some margin
     knees_height = (left_knee.y + right_knee.y) / 2
     
     # Debug print to compare hip and knee heights
@@ -104,7 +104,7 @@ def is_knee_cave(results):
     right_knee = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_KNEE]
     left_ankle = results.pose_landmarks.landmark[mp_pose.PoseLandmark.LEFT_ANKLE]
     right_ankle = results.pose_landmarks.landmark[mp_pose.PoseLandmark.RIGHT_ANKLE]
-    hips_width = abs(left_hip.x - right_hip.x)
+    hips_width = abs(left_hip.x - right_hip.x) + 0.05
     knees_width = abs(left_knee.x - right_knee.x)
     ankles_width = abs(left_ankle.x - right_ankle.x)
     
