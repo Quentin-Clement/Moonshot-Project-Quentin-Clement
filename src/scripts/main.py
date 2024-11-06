@@ -1,15 +1,47 @@
 import cv2
 import time
 from mediapipe_detection import mediapipe_detection, initialize_mediapipe
-from process_frame import process_frame
-from gesture_detection import are_keypoints_detected
 import mediapipe as mp
+from gesture_detection import are_keypoints_detected, has_squat_began, is_depth_sufficient, is_knee_cave, is_standing_up
 
 # Initialize MediaPipe drawing utilities
 mp_drawing = mp.solutions.drawing_utils
+mp_pose = mp.solutions.pose
+
+# Time tracking variables for status display
+depth_detected_time = None
+knee_cave_detected_time = None
+DISPLAY_DURATION = 3  # seconds
+
+# Initialize global flags for depth and knee cave detection
+sufficient_depth_detected = False
+knee_cave_detected = False
+
+# Process frame to update depth and knee cave status
+def process_frame(results):
+    global sufficient_depth_detected, knee_cave_detected
+
+    if results.pose_landmarks:
+        landmarks = results.pose_landmarks.landmark
+
+        # Check if squat depth is sufficient
+        if all(landmarks[i].visibility > 0.5 for i in [11, 12, 13, 14]):  # Hips and knees
+            if is_depth_sufficient(results):
+                sufficient_depth_detected = True
+            else:
+                sufficient_depth_detected = False
+
+        # Check for knee cave
+        if all(landmarks[i].visibility > 0.5 for i in [11, 12, 13, 14, 15, 16]):  # Hips, knees, ankles
+            if is_knee_cave(results):
+                knee_cave_detected = True
+            else:
+                knee_cave_detected = False
 
 # Main function
 def main():
+    global depth_detected_time, knee_cave_detected_time
+
     holistic = initialize_mediapipe()
     cap = cv2.VideoCapture(0)
     
@@ -17,7 +49,7 @@ def main():
     cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
     cv2.setWindowProperty(window_name, cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
     
-    # Countdown for 5 seconds
+    # Countdown for 5 seconds before starting
     initial_wait_start = time.time()
     while time.time() - initial_wait_start < 5:
         ret, frame = cap.read()
@@ -32,9 +64,7 @@ def main():
             return
     
     print("Starting detection...")
-    start_time = time.time()
-
-    # Process frames for 5 seconds
+    
     while True:
         ret, frame = cap.read()
         if not ret:
@@ -44,23 +74,49 @@ def main():
         image, results = mediapipe_detection(frame, holistic)
         keypoints_detection_message = []
         are_keypoints_detected(results, keypoints_detection_message)
+
         process_frame(results)
 
         # Draw landmarks on the frame
         if results.pose_landmarks:
             mp_drawing.draw_landmarks(image, results.pose_landmarks, mp.solutions.holistic.POSE_CONNECTIONS)
 
-        # Display missing keypoints messages on the frame if any
-        if keypoints_detection_message:
-            y_offset = 50  # Starting y-coordinate for text display
-            for line in keypoints_detection_message:
-                cv2.putText(image, line, (30, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
-                y_offset += 30
+            # Check for depth and knee cave detection and set the display time if detected
+            if sufficient_depth_detected:
+                if depth_detected_time is None:
+                    depth_detected_time = time.time()
+            else:
+                depth_detected_time = None  # Reset if no depth detected
 
-        # Show the frame with keypoints and any missing message
+            if knee_cave_detected:
+                if knee_cave_detected_time is None:
+                    knee_cave_detected_time = time.time()
+            else:
+                knee_cave_detected_time = None  # Reset if no knee cave detected
+
+            # Display the result for depth
+            if depth_detected_time and (time.time() - depth_detected_time) < DISPLAY_DURATION:
+                cv2.putText(image, "Depth Sufficient: True", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            else:
+                cv2.putText(image, f"Depth Sufficient: {sufficient_depth_detected}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
+            # Display the result for knee cave
+            if knee_cave_detected_time and (time.time() - knee_cave_detected_time) < DISPLAY_DURATION:
+                cv2.putText(image, "Knee Cave Detected: True", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            else:
+                cv2.putText(image, f"Knee Cave Detected: {knee_cave_detected}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 2)
+
+            # Display missing keypoints messages on the frame if any
+            if keypoints_detection_message:
+                y_offset = 150  # Starting y-coordinate for text display
+                for line in keypoints_detection_message:
+                    cv2.putText(image, line, (30, y_offset), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 0, 255), 2)
+                    y_offset += 30
+
+        # Show the frame with keypoints and any messages
         cv2.imshow(window_name, image)
 
-        # Stop after 5 seconds or if 'q' is pressed
+        # Stop if 'q' is pressed
         if cv2.waitKey(10) & 0xFF == ord('q'):
             break
 
