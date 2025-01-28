@@ -43,7 +43,7 @@ def main():
     global depth_detected_time, knee_cave_detected_time
 
     holistic = initialize_mediapipe()
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
     
     window_name = 'Gesture Detection'
     cv2.namedWindow(window_name, cv2.WND_PROP_FULLSCREEN)
@@ -130,3 +130,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+    
