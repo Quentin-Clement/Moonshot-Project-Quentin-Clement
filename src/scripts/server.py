@@ -1,20 +1,11 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
+from fastapi import FastAPI, File
 
 app = FastAPI()
 
-# Define request body model
-class CalculationRequest(BaseModel):
-    number1: float
-    number2: float
-
-# Define API endpoint
-@app.post("/calculate")
-async def calculate(data: CalculationRequest):
-    result = data.number1 + data.number2  # Example calculation
-    return {"result": result}
-
-# Run the server
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+@app.post("/frame")
+async def process_frame(frame: bytes = File(...)):
+    # Print a message every time a new frame is received
+    print(f"Received a new frame of size: {len(frame)} bytes")
+    
+    # Here you could add additional processing, e.g., decoding the image with OpenCV or Pillow.
+    return {"status": "success"}
