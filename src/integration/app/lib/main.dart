@@ -32,7 +32,9 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   CameraController? _controller;
   bool _isCameraInitialized = false;
   late List<CameraDescription> _cameras;
-  bool _isSending = false; // flag to throttle sending frames
+  // Remove the _isSending flag and use an active counter instead.
+  int _activeRequests = 0;
+  final int _maxConcurrentRequests = 5; // Set your concurrency limit.
 
   // Replace with your actual Python FastAPI server endpoint
   final String _endpointUrl = 'http://192.168.14.175:8000/frame';
@@ -56,7 +58,6 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   Future<void> onNewCameraSelected(CameraDescription description) async {
     final previousCameraController = _controller;
 
-    // Using YUV420 for image stream format.
     final CameraController cameraController = CameraController(
       description,
       ResolutionPreset.high,
@@ -74,15 +75,17 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         });
       }
 
-      // Start the image stream and send frames as RGB bytes.
+      // Start the image stream and send frames concurrently.
       _controller!.startImageStream((CameraImage image) {
-        // Store the current frame in 'frame'
-        var frame = image;
-        if (!_isSending) {
-          _isSending = true;
-          sendFrame(frame).then((_) {
-            _isSending = false;
+        // If we're below the concurrency limit, send the frame.
+        if (_activeRequests < _maxConcurrentRequests) {
+          _activeRequests++;
+          sendFrame(image).whenComplete(() {
+            _activeRequests--;
           });
+        } else {
+          // Optionally, log or handle dropped frames.
+          debugPrint("Skipping frame: too many active requests ($_activeRequests).");
         }
       });
     } on CameraException catch (e) {
@@ -113,13 +116,12 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   }
 
   /// Converts a YUV420 [CameraImage] to RGB bytes.
-  /// The conversion logic follows the approach from the tutorial.
   Uint8List convertYUV420ToRGB(CameraImage image) {
     final int width = image.width;
     final int height = image.height;
     var rgbBuffer = Uint8List(width * height * 3);
 
-    // Check if the image has 3 planes (separate Y, U, and V)
+    // Check if the image has 3 planes (Y, U, and V).
     if (image.planes.length == 3) {
       final int uvRowStride = image.planes[1].bytesPerRow;
       final int uvPixelStride = image.planes[1].bytesPerPixel ?? 1;
@@ -156,7 +158,6 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           int uvIndex = uvRow + (w >> 1) * uvPixelStride;
           int index = h * width + w;
           int y = image.planes[0].bytes[index];
-          // In an interleaved UV plane, the first byte is U and the second is V.
           int u = image.planes[1].bytes[uvIndex];
           int v = image.planes[1].bytes[uvIndex + 1];
 
@@ -174,7 +175,6 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
         }
       }
     } else {
-      // Fallback: return an empty buffer if unexpected plane count.
       debugPrint("Unsupported number of image planes: ${image.planes.length}");
       return Uint8List(0);
     }
