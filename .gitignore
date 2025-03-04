@@ -13,6 +13,5 @@ Podfile.lock
 Carthage/Checkouts
 Carthage/Build
 
-# Swift Package Manager
-Packages
-Package.pins
+# Virtual environments
+venv/
