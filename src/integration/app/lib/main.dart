@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:math';
 
 void main() => runApp(const MyApp());
 
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Camera App',
+      title: 'Squat Form Analyzer',
       themeMode: ThemeMode.dark,
       theme: ThemeData.dark(),
       debugShowCheckedModeBanner: false,
@@ -32,12 +32,17 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
   CameraController? _controller;
   bool _isCameraInitialized = false;
   late List<CameraDescription> _cameras;
-  // Remove the _isSending flag and use an active counter instead.
   int _activeRequests = 0;
-  final int _maxConcurrentRequests = 5; // Set your concurrency limit.
+  final int _maxConcurrentRequests = 3; // Reduced for better performance
 
   // Replace with your actual Python FastAPI server endpoint
   final String _endpointUrl = 'http://192.168.14.175:8000/frame';
+
+  // Detection state
+  bool _depthSufficient = false;
+  bool _kneeCaveDetected = false;
+  List<String> _missingKeypoints = [];
+  bool _poseDetected = false;
 
   @override
   void initState() {
@@ -60,7 +65,7 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
 
     final CameraController cameraController = CameraController(
       description,
-      ResolutionPreset.high,
+      ResolutionPreset.high, 
       imageFormatGroup: ImageFormatGroup.yuv420,
     );
 
@@ -83,9 +88,6 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
           sendFrame(image).whenComplete(() {
             _activeRequests--;
           });
-        } else {
-          // Optionally, log or handle dropped frames.
-          debugPrint("Skipping frame: too many active requests ($_activeRequests).");
         }
       });
     } on CameraException catch (e) {
@@ -106,7 +108,15 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
       );
 
       if (response.statusCode == 200) {
-        debugPrint("Frame sent successfully");
+        // Parse the response JSON
+        final responseData = jsonDecode(response.body);
+        
+        setState(() {
+          _poseDetected = responseData['status'] == 'success';
+          _depthSufficient = responseData['depth_sufficient'] ?? false;
+          _kneeCaveDetected = responseData['knee_cave_detected'] ?? false;
+          _missingKeypoints = List<String>.from(responseData['missing_keypoints'] ?? []);
+        });
       } else {
         debugPrint("Error sending frame: ${response.statusCode}");
       }
@@ -206,7 +216,109 @@ class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
     return Scaffold(
       body: SafeArea(
         child: _isCameraInitialized
-            ? Center(child: Text("Sending RGB frames to Python server..."))
+            ? Column(
+                children: [
+                  Expanded(
+                    child: Stack(
+                      children: [
+                        // Camera preview
+                        Center(
+                          child: CameraPreview(_controller!),
+                        ),
+                        
+                        // Missing keypoints overlay
+                        if (_missingKeypoints.isNotEmpty)
+                          Positioned(
+                            top: 20,
+                            right: 20,
+                            child: Container(
+                              padding: const EdgeInsets.all(8),
+                              decoration: BoxDecoration(
+                                color: Colors.black54,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: _missingKeypoints
+                                    .map((msg) => Padding(
+                                          padding: const EdgeInsets.symmetric(vertical: 4),
+                                          child: Text(
+                                            msg,
+                                            style: const TextStyle(color: Colors.red, fontSize: 14),
+                                          ),
+                                        ))
+                                    .toList(),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                  
+                  // Detection results panel
+                  Container(
+                    color: Colors.black87,
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+                    child: Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Pose Detected:',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              _poseDetected ? 'Yes' : 'No',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: _poseDetected ? Colors.green : Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Depth Sufficient:',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              _depthSufficient ? 'Yes' : 'No',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: _depthSufficient ? Colors.green : Colors.red,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            const Text(
+                              'Knee Cave Detected:',
+                              style: TextStyle(fontSize: 18),
+                            ),
+                            Text(
+                              _kneeCaveDetected ? 'Yes' : 'No',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: _kneeCaveDetected ? Colors.red : Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              )
             : const Center(child: CircularProgressIndicator()),
       ),
     );

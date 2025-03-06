@@ -53,9 +53,9 @@ def process_frame_for_pose(results):
 @app.post("/frame")
 async def process_frame(request: Request):
     """
-    Endpoint to receive frames via HTTP
+    Endpoint to receive frames via HTTP and return detection results
     """
-    global latest_frame
+    global latest_frame, sufficient_depth_detected, knee_cave_detected
     frame_bytes = await request.body()
 
     # Convert the raw bytes to a NumPy array
@@ -72,8 +72,36 @@ async def process_frame(request: Request):
     # Update the global latest_frame variable safely
     with frame_lock:
         latest_frame = frame
-
-    return {"status": "success"}
+        
+    # Process the frame immediately for this request
+    # Initialize MediaPipe if needed
+    holistic = initialize_mediapipe()
+    
+    # Process with MediaPipe
+    _, results = mediapipe_detection(frame, holistic)
+    
+    # Process frame for pose estimation
+    if results.pose_landmarks:
+        process_frame_for_pose(results)
+        
+        # Prepare keypoint detection messages
+        keypoints_detection_message = []
+        are_keypoints_detected(results, keypoints_detection_message)
+        
+        # Return detection results
+        return {
+            "status": "success",
+            "depth_sufficient": sufficient_depth_detected,
+            "knee_cave_detected": knee_cave_detected,
+            "missing_keypoints": keypoints_detection_message
+        }
+    else:
+        return {
+            "status": "no_pose_detected",
+            "depth_sufficient": False,
+            "knee_cave_detected": False,
+            "missing_keypoints": ["No pose detected"]
+        }
 
 def process_and_display_frames():
     """
