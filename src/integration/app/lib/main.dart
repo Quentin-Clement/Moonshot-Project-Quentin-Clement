@@ -1,325 +1,47 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:camera/camera.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'dart:typed_data';
+import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'routes.dart';
 
-void main() => runApp(const MyApp());
+void main() {
+  runApp(const ProviderScope(child: MainApp()));
+}
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MainApp extends ConsumerWidget {
+  const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Squat Form Analyzer',
-      themeMode: ThemeMode.dark,
-      theme: ThemeData.dark(),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final router = ref.watch(routeProvider);
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp.router(
+      title: 'LiftGuard',
+      routerConfig: router,
       debugShowCheckedModeBanner: false,
-      home: const CameraPage(),
-    );
-  }
-}
-
-class CameraPage extends StatefulWidget {
-  const CameraPage({super.key});
-
-  @override
-  CameraPageState createState() => CameraPageState();
-}
-
-class CameraPageState extends State<CameraPage> with WidgetsBindingObserver {
-  CameraController? _controller;
-  bool _isCameraInitialized = false;
-  late List<CameraDescription> _cameras;
-  int _activeRequests = 0;
-  final int _maxConcurrentRequests = 3; // Reduced for better performance
-
-  // Replace with your actual Python FastAPI server endpoint
-  final String _endpointUrl = 'http://192.168.14.175:8000/frame';
-
-  // Detection state
-  bool _depthSufficient = false;
-  bool _kneeCaveDetected = false;
-  List<String> _missingKeypoints = [];
-  bool _poseDetected = false;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addObserver(this);
-    initCamera(); // Initialize the camera
-  }
-
-  Future<void> initCamera() async {
-    _cameras = await availableCameras();
-    if (_cameras.isNotEmpty) {
-      await onNewCameraSelected(_cameras.first);
-    } else {
-      debugPrint("No cameras found!");
-    }
-  }
-
-  Future<void> onNewCameraSelected(CameraDescription description) async {
-    final previousCameraController = _controller;
-
-    final CameraController cameraController = CameraController(
-      description,
-      ResolutionPreset.high, 
-      imageFormatGroup: ImageFormatGroup.yuv420,
-    );
-
-    await previousCameraController?.dispose();
-
-    try {
-      await cameraController.initialize();
-      if (mounted) {
-        setState(() {
-          _controller = cameraController;
-          _isCameraInitialized = true;
-        });
-      }
-
-      // Start the image stream and send frames concurrently.
-      _controller!.startImageStream((CameraImage image) {
-        // If we're below the concurrency limit, send the frame.
-        if (_activeRequests < _maxConcurrentRequests) {
-          _activeRequests++;
-          sendFrame(image).whenComplete(() {
-            _activeRequests--;
-          });
-        }
-      });
-    } on CameraException catch (e) {
-      debugPrint('Error initializing camera: $e');
-    }
-  }
-
-  Future<void> sendFrame(CameraImage frame) async {
-    try {
-      // Convert the YUV420 image to RGB bytes.
-      Uint8List rgbBytes = convertYUV420ToRGB(frame);
-
-      // Send the RGB bytes to the Python FastAPI endpoint.
-      var response = await http.post(
-        Uri.parse(_endpointUrl),
-        headers: {"Content-Type": "application/octet-stream"},
-        body: rgbBytes,
-      );
-
-      if (response.statusCode == 200) {
-        // Parse the response JSON
-        final responseData = jsonDecode(response.body);
-        
-        setState(() {
-          _poseDetected = responseData['status'] == 'success';
-          _depthSufficient = responseData['depth_sufficient'] ?? false;
-          _kneeCaveDetected = responseData['knee_cave_detected'] ?? false;
-          _missingKeypoints = List<String>.from(responseData['missing_keypoints'] ?? []);
-        });
-      } else {
-        debugPrint("Error sending frame: ${response.statusCode}");
-      }
-    } catch (e) {
-      debugPrint("Exception sending frame: $e");
-    }
-  }
-
-  /// Converts a YUV420 [CameraImage] to RGB bytes.
-  Uint8List convertYUV420ToRGB(CameraImage image) {
-    final int width = image.width;
-    final int height = image.height;
-    var rgbBuffer = Uint8List(width * height * 3);
-
-    // Check if the image has 3 planes (Y, U, and V).
-    if (image.planes.length == 3) {
-      final int uvRowStride = image.planes[1].bytesPerRow;
-      final int uvPixelStride = image.planes[1].bytesPerPixel ?? 1;
-      for (int h = 0; h < height; h++) {
-        int uvRow = uvRowStride * (h >> 1);
-        for (int w = 0; w < width; w++) {
-          int uvIndex = uvRow + (w >> 1) * uvPixelStride;
-          int index = h * width + w;
-          int y = image.planes[0].bytes[index];
-          int u = image.planes[1].bytes[uvIndex];
-          int v = image.planes[2].bytes[uvIndex];
-
-          double yVal = y.toDouble();
-          double uVal = u.toDouble() - 128;
-          double vVal = v.toDouble() - 128;
-
-          int r = (yVal + 1.370705 * vVal).round();
-          int g = (yVal - 0.337633 * uVal - 0.698001 * vVal).round();
-          int b = (yVal + 1.732446 * uVal).round();
-
-          rgbBuffer[index * 3] = r.clamp(0, 255);
-          rgbBuffer[index * 3 + 1] = g.clamp(0, 255);
-          rgbBuffer[index * 3 + 2] = b.clamp(0, 255);
-        }
-      }
-    }
-    // Handle the two-plane (interleaved UV) case.
-    else if (image.planes.length == 2) {
-      final int uvRowStride = image.planes[1].bytesPerRow;
-      final int uvPixelStride = image.planes[1].bytesPerPixel ?? 2;
-      for (int h = 0; h < height; h++) {
-        int uvRow = uvRowStride * (h >> 1);
-        for (int w = 0; w < width; w++) {
-          int uvIndex = uvRow + (w >> 1) * uvPixelStride;
-          int index = h * width + w;
-          int y = image.planes[0].bytes[index];
-          int u = image.planes[1].bytes[uvIndex];
-          int v = image.planes[1].bytes[uvIndex + 1];
-
-          double yVal = y.toDouble();
-          double uVal = u.toDouble() - 128;
-          double vVal = v.toDouble() - 128;
-
-          int r = (yVal + 1.370705 * vVal).round();
-          int g = (yVal - 0.337633 * uVal - 0.698001 * vVal).round();
-          int b = (yVal + 1.732446 * uVal).round();
-
-          rgbBuffer[index * 3] = r.clamp(0, 255);
-          rgbBuffer[index * 3 + 1] = g.clamp(0, 255);
-          rgbBuffer[index * 3 + 2] = b.clamp(0, 255);
-        }
-      }
-    } else {
-      debugPrint("Unsupported number of image planes: ${image.planes.length}");
-      return Uint8List(0);
-    }
-    return rgbBuffer;
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    final CameraController? cameraController = _controller;
-    if (cameraController == null || !cameraController.value.isInitialized) {
-      return;
-    }
-    if (state == AppLifecycleState.inactive) {
-      cameraController.dispose();
-    } else if (state == AppLifecycleState.resumed) {
-      onNewCameraSelected(cameraController.description);
-    }
-  }
-
-  @override
-  void dispose() {
-    _controller?.dispose();
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: _isCameraInitialized
-            ? Column(
-                children: [
-                  Expanded(
-                    child: Stack(
-                      children: [
-                        // Camera preview
-                        Center(
-                          child: CameraPreview(_controller!),
-                        ),
-                        
-                        // Missing keypoints overlay
-                        if (_missingKeypoints.isNotEmpty)
-                          Positioned(
-                            top: 20,
-                            right: 20,
-                            child: Container(
-                              padding: const EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                color: Colors.black54,
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: _missingKeypoints
-                                    .map((msg) => Padding(
-                                          padding: const EdgeInsets.symmetric(vertical: 4),
-                                          child: Text(
-                                            msg,
-                                            style: const TextStyle(color: Colors.red, fontSize: 14),
-                                          ),
-                                        ))
-                                    .toList(),
-                              ),
-                            ),
-                          ),
-                      ],
-                    ),
-                  ),
-                  
-                  // Detection results panel
-                  Container(
-                    color: Colors.black87,
-                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
-                    child: Column(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Pose Detected:',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              _poseDetected ? 'Yes' : 'No',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: _poseDetected ? Colors.green : Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Depth Sufficient:',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              _depthSufficient ? 'Yes' : 'No',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: _depthSufficient ? Colors.green : Colors.red,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 12),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            const Text(
-                              'Knee Cave Detected:',
-                              style: TextStyle(fontSize: 18),
-                            ),
-                            Text(
-                              _kneeCaveDetected ? 'Yes' : 'No',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.bold,
-                                color: _kneeCaveDetected ? Colors.red : Colors.green,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              )
-            : const Center(child: CircularProgressIndicator()),
+      themeMode: ThemeMode.dark,
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        primaryColor: Colors.red[800],
+        scaffoldBackgroundColor: Colors.grey[900],
+        appBarTheme: AppBarTheme(
+          backgroundColor: Colors.grey[850],
+          elevation: 0,
+        ),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.red[800],
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
+            ),
+          ),
+        ),
       ),
     );
   }
