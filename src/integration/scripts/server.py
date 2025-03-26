@@ -8,7 +8,7 @@ import uvicorn
 
 # Import custom detection modules
 from mediapipe_detection import mediapipe_detection, initialize_mediapipe
-from gesture_detection import are_keypoints_detected, is_depth_sufficient, is_knee_cave
+from integration.scripts.squat_analysis import are_keypoints_detected, is_depth_sufficient, is_knee_cave
 
 # Initialize MediaPipe drawing utilities
 mp_drawing = mp.solutions.drawing_utils
