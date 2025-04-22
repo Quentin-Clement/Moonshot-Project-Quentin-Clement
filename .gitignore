@@ -16,3 +16,12 @@ Carthage/Build
 # Swift Package Manager
 Packages
 Package.pins
+
+# Python virtual environments
+venv/
+env/
+.venv/
+.env/
+ENV/
+pythonenv*/
+.Python
