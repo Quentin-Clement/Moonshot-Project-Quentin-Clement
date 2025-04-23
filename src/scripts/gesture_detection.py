@@ -1,4 +1,5 @@
 import mediapipe as mp
+import math
 
 mp_pose = mp.solutions.pose
 
@@ -158,3 +159,108 @@ def are_keypoints_detected(results, keypoints_detection_message):
         keypoints_detection_message.append(" ".join(ankles_message))
     if feet_message:
         keypoints_detection_message.append(" ".join(feet_message))
+
+# Utility to compute the angle between three points
+def compute_angle(a, b, c):
+    """
+    Computes the angle at point b formed by points a-b-c in degrees.
+    a, b, c: objects with .x, .y, .z
+    """
+    # Convert to vectors
+    ba = (a.x - b.x, a.y - b.y)
+    bc = (c.x - b.x, c.y - b.y)
+    # Dot product and magnitudes
+    dot = ba[0] * bc[0] + ba[1] * bc[1]
+    mag_ba = math.hypot(ba[0], ba[1])
+    mag_bc = math.hypot(bc[0], bc[1])
+    if mag_ba * mag_bc == 0:
+        return 0.0
+    # Compute angle
+    cos_angle = max(-1.0, min(1.0, dot / (mag_ba * mag_bc)))
+    angle = math.degrees(math.acos(cos_angle))
+    return angle
+
+class SquatCounter:
+    """
+    Counts squat repetitions and marks start/end times with calibration.
+    It waits for a stable 'up' position before beginning count.
+    Usage:
+        counter = SquatCounter()
+        for each frame:
+            counter.update(results, timestamp)
+        total = counter.get_count()
+        start_end_pairs = counter.get_times()
+    """
+    def __init__(self, down_threshold=140, depth_threshold=90, up_threshold=160,
+                 calib_frames=30):
+        # Thresholds in degrees
+        self.down_threshold = down_threshold
+        self.depth_threshold = depth_threshold
+        self.up_threshold = up_threshold
+        # Calibration: require several frames of full extension
+        self.calib_frames = calib_frames
+        self.calib_count = 0
+        self.calibrated = False
+        # FSM state: 'up' or 'down'
+        self.state = 'up'
+        self.depth_reached = False
+        self.count = 0
+        self.start_times = []
+        self.end_times = []
+
+    def update(self, results, timestamp):
+        """
+        Call this for each frame with pose estimation results and current timestamp (in seconds).
+        Will ignore frames until calibration achieved.
+        """
+        if not results.pose_landmarks:
+            return
+        lm = results.pose_landmarks.landmark
+        # Compute average knee angle
+        left_hip = lm[mp_pose.PoseLandmark.LEFT_HIP.value]
+        left_knee = lm[mp_pose.PoseLandmark.LEFT_KNEE.value]
+        left_ankle = lm[mp_pose.PoseLandmark.LEFT_ANKLE.value]
+        right_hip = lm[mp_pose.PoseLandmark.RIGHT_HIP.value]
+        right_knee = lm[mp_pose.PoseLandmark.RIGHT_KNEE.value]
+        right_ankle = lm[mp_pose.PoseLandmark.RIGHT_ANKLE.value]
+        angle_left = compute_angle(left_hip, left_knee, left_ankle)
+        angle_right = compute_angle(right_hip, right_knee, right_ankle)
+        knee_angle = (angle_left + angle_right) / 2.0
+
+        # Calibration stage: ensure user starts in full extension
+        if not self.calibrated:
+            if knee_angle > self.up_threshold:
+                self.calib_count += 1
+            else:
+                self.calib_count = 0
+            if self.calib_count >= self.calib_frames:
+                self.calibrated = True
+                print("Calibration complete. Starting squat detection.")
+            return
+
+        # FSM transitions after calibration
+        if self.state == 'up':
+            # Squat begins when knee bends below down_threshold
+            if knee_angle < self.down_threshold:
+                self.state = 'down'
+                self.depth_reached = False
+                self.start_times.append(timestamp)
+        elif self.state == 'down':
+            # Mark depth if below deeper threshold
+            if knee_angle < self.depth_threshold:
+                self.depth_reached = True
+            # Squat ends when knee extends above up_threshold
+            if knee_angle > self.up_threshold:
+                self.state = 'up'
+                self.end_times.append(timestamp)
+                if self.depth_reached:
+                    self.count += 1
+                # ready for next rep
+                self.depth_reached = False
+
+    def get_count(self):
+        return self.count
+
+    def get_times(self):
+        """Returns paired lists of (start_times, end_times) in seconds."""
+        return list(zip(self.start_times, self.end_times))
