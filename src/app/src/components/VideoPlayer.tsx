@@ -1,14 +1,15 @@
-// components/VideoPlayer.tsx
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX, RotateCcw } from 'lucide-react';
 
 interface VideoPlayerProps {
   src: string;
+  thumbnailUrl?: string; // Add thumbnailUrl property
   autoPlay?: boolean;
 }
 
 const VideoPlayer: React.FC<VideoPlayerProps> = ({
   src,
+  thumbnailUrl,
   autoPlay = false,
 }) => {
   const [isPlaying, setIsPlaying] = useState(autoPlay);
@@ -71,6 +72,7 @@ const VideoPlayer: React.FC<VideoPlayerProps> = ({
       <video
         ref={videoRef}
         src={src}
+        poster={thumbnailUrl} // Use thumbnailUrl as the poster image
         preload="metadata"
         playsInline
         className="w-full h-auto"

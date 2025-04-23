@@ -25,3 +25,6 @@ env/
 ENV/
 pythonenv*/
 .Python
+
+# Video files
+*.mp4
