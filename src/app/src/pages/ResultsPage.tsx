@@ -84,7 +84,7 @@ const ResultsPage: React.FC = () => {
       <div>
         <h2 className="text-lg font-semibold mb-2">Detailed Breakdown</h2>
         {/* grid-cols-3 creates three items per row; adjust at different breakpoints as needed */}
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-4">
           {videoSegments.map((segment) => (
             // pass each segment to the VideoSegment component
             <VideoSegment key={segment.id} segment={segment} />

@@ -36,23 +36,33 @@ export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     
     // Simulate creating 5 video segments with random correctness status
     // In a real app, these would be created by the backend
-    const mockSegments: VideoSegment[] = Array.from({ length: 5 }, (_, i) => ({
-      id: uuidv4(),
-      originalVideoId: newOriginalVideo.id,
-      segmentNumber: i + 1,
-      url: videoUrl, // In a real app, this would be a different URL for each segment
-      thumbnailUrl: videoUrl, // In a real app, we'd generate a thumbnail
-      isCorrect: Math.random() > 0.4, // Random correctness status
-      feedback: Math.random() > 0.4 
-        ? "Good form, depth and posture look correct." 
-        : "Form needs improvement, watch knee alignment and depth.",
-      duration: 0, // In a real app, we'd calculate this
-    }));
-    
-    // Simulate a delay for processing
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
-    setVideoSegments(mockSegments);
+    // Send to backend for real processing
+    const form = new FormData();
+    form.append('video', videoFile);
+
+    try {
+      const res = await fetch('/api/process-video', {
+        method: 'POST',
+        body: form,
+      });
+      if (!res.ok) {
+        const err = await res.text();
+        throw new Error(err || res.statusText);
+      }
+      const data = await res.json();
+
+      // originalVideo comes with { url, thumbnailUrl }
+      setOriginalVideo({
+        id: uuidv4(),
+        ...data.originalVideo,
+      });
+
+      // videoSegments is an array of { id, segmentNumber, url, thumbnailUrl, startTime, endTime }
+      setVideoSegments(data.videoSegments);
+    } catch (e) {
+      console.error('Video processing failed:', e);
+      throw e;
+    }
   };
 
   const clearVideos = () => {

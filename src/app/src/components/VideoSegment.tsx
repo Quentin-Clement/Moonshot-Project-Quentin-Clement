@@ -17,11 +17,11 @@ const VideoSegment: React.FC<VideoSegmentProps> = ({ segment }) => {
     <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
       {/* container for video and badges */}
       <div className="relative">
-        <VideoPlayer
-          src={segment.url}
-          thumbnailUrl={segment.thumbnailUrl}
-          // Don't pass isCorrect anymore since we're handling it here
-        />
+          <VideoPlayer
+      src={segment.url}
+      thumbnailUrl={segment.thumbnailUrl}
+      autoPlay={false}
+      />
         {/* badge at top-left showing segment number */}
         <span className="absolute top-2 left-2 bg-slate-800 text-white text-xs font-semibold px-2 py-1 rounded-full">
           {segment.segmentNumber}
