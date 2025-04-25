@@ -28,3 +28,8 @@ pythonenv*/
 
 # Video files
 *.mp4
+
+# Image files
+*.jpg
+*.jpeg
+*.png

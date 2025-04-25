@@ -16,4 +16,8 @@ export interface VideoSegment {
   isCorrect: boolean;
   feedback: string;
   duration: number;
+
+  depth_ok:  boolean;
+  knees_ok:  boolean;
+  toes_ok:   boolean;
 }

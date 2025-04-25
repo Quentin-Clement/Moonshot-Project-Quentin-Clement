@@ -15,6 +15,18 @@ const ResultsPage: React.FC = () => {
     if (!originalVideo) navigate('/');
   }, [originalVideo, navigate]);
 
+  useEffect(() => {
+    // DEBUG: log each segment’s correctness flags
+    videoSegments.forEach(segment => {
+      console.log(
+        `Segment ${segment.segmentNumber}: ` +
+        `depth_ok=${segment.depth_ok}, ` +
+        `knees_ok=${segment.knees_ok}, ` +
+        `toes_ok=${segment.toes_ok}`
+      );
+    });
+  }, [videoSegments]);
+
   // Show a loading spinner while the backend processes the video
   if (!originalVideo) {
     return (
