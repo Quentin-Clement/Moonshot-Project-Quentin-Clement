@@ -28,15 +28,6 @@ const VideoSegment: React.FC<VideoSegmentProps> = ({ segment }) => {
             {segment.isCorrect ? 'Correct' : 'Incorrect'}
           </span>
         </div>
-        
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-base font-semibold">Phase {segment.segmentNumber}</h3>
-          </div>
-          <p className="text-sm text-slate-600 line-clamp-2">
-            {segment.feedback}
-          </p>
-        </div>
       </div>
     </Link>
   );
