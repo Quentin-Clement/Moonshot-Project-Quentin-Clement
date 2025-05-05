@@ -16,3 +16,20 @@ Carthage/Build
 # Swift Package Manager
 Packages
 Package.pins
+
+# Python virtual environments
+venv/
+env/
+.venv/
+.env/
+ENV/
+pythonenv*/
+.Python
+
+# Video files
+*.mp4
+
+# Image files
+*.jpg
+*.jpeg
+*.png
