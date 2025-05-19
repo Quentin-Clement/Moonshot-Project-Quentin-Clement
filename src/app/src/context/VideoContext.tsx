@@ -41,9 +41,11 @@ export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     form.append('video', videoFile);
 
     try {
-      const res = await fetch('/api/process-video', {
+      const BACKEND = 'http://127.0.0.1:8000';
+
+      const res = await fetch(`${BACKEND}/api/process-video`, {
         method: 'POST',
-        body: form,
+        body: form
       });
       if (!res.ok) {
         const err = await res.text();

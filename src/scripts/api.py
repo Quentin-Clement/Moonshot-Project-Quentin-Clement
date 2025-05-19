@@ -12,7 +12,7 @@ app = FastAPI()
 # Allow your React origin (and adjust in prod as needed)
 app.add_middleware(
   CORSMiddleware,
-  allow_origins=["http://localhost:5173"],
+  allow_origins=["http://localhost:5173", "capacitor://localhost"],
   allow_credentials=True,
   allow_methods=["*"],
   allow_headers=["*"],

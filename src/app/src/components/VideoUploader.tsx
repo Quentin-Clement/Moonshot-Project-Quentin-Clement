@@ -156,7 +156,6 @@ const VideoUploader: React.FC = () => {
               ref={fileInputRef}
               type="file"
               accept="video/*"
-              capture="environment"
               onChange={handleFileSelect}
               className="hidden"
             />
