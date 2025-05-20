@@ -18,38 +18,41 @@ app.add_middleware(
   allow_headers=["*"],
 )
 
-# Directories
-BASE_DIR    = os.path.dirname(os.path.abspath(__file__))
-UPLOAD_DIR  = os.path.join(BASE_DIR, 'uploads')
-OUTPUT_DIR  = os.path.join(BASE_DIR, 'outputs')
+BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
+UPLOAD_DIR = os.path.join(BASE_DIR, 'uploads')
+OUTPUT_DIR = os.path.join(BASE_DIR, 'outputs')
+os.makedirs(UPLOAD_DIR, exist_ok=True)
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
-for d in (UPLOAD_DIR, OUTPUT_DIR):
-    os.makedirs(d, exist_ok=True)
-
-# Expose outputs/ as static so React can fetch /outputs/...
+# 2) mount static files
 app.mount('/outputs', StaticFiles(directory=OUTPUT_DIR), name='outputs')
 
 @app.post('/api/process-video')
 async def process_video_endpoint(video: UploadFile = File(...)):
-    # validate extension
-    if not video.filename.lower().endswith(('.mp4', '.mov', '.avi')):
+    if not video.filename.lower().endswith(('.mp4','.mov','.avi')):
         raise HTTPException(400, 'Unsupported video format')
 
-    # save upload
-    uid = str(uuid4())
-    save_name = f"{uid}_{video.filename}"
+    uid         = str(uuid4())
+    save_name   = f"{uid}_{video.filename}"
     upload_path = os.path.join(UPLOAD_DIR, save_name)
     with open(upload_path, 'wb') as f:
         f.write(await video.read())
 
-    # process
     try:
         result = process_video(input_path=upload_path, output_dir=OUTPUT_DIR)
     except Exception as e:
         raise HTTPException(500, f"Processing failed: {e}")
 
-    return JSONResponse(content=result)
+    # 3) rewrite any absolute paths into URLs that clients can fetch
+    def to_url(p):
+        fn = os.path.basename(p)
+        return f"/outputs/{fn}"
 
+    # if your helper stored them under keys "snippets" & "thumbnails":
+    result["snippets"]   = [to_url(p) for p in result.get("snippets",[])]
+    result["thumbnails"] = [to_url(p) for p in result.get("thumbnails",[])]
+
+    return JSONResponse(content=result)
 
 if __name__ == '__main__':
     import uvicorn

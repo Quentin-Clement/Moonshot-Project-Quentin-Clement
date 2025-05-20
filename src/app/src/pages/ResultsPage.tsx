@@ -5,6 +5,8 @@ import { useVideo } from '../context/VideoContext';
 import VideoPlayer from '../components/VideoPlayer';
 import VideoSegment from '../components/VideoSegment';
 
+const BACKEND = 'http://127.0.0.1:8000';
+
 const ResultsPage: React.FC = () => {
   // grab the analyzed video and computed segments from context
   const { originalVideo, videoSegments } = useVideo();
@@ -69,8 +71,8 @@ const ResultsPage: React.FC = () => {
           <h2 className="text-lg font-semibold mb-3">Your Squat</h2>
           {/* play the original recorded squat */}
           <VideoPlayer
-            src={originalVideo.url}
-            thumbnailUrl={originalVideo.thumbnailUrl}
+            src={`${BACKEND}${originalVideo.url}`}
+            thumbnailUrl={`${BACKEND}${originalVideo.thumbnailUrl}`}
           />
         </div>
         <div className="border-t border-slate-100 p-4">
@@ -99,7 +101,7 @@ const ResultsPage: React.FC = () => {
         <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-4">
           {videoSegments.map((segment) => (
             // pass each segment to the VideoSegment component
-            <VideoSegment key={segment.id} segment={segment} />
+            <VideoSegment key={segment.id} segment={segment}/>
           ))}
         </div>
       </div>

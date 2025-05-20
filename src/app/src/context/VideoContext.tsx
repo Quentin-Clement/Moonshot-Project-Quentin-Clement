@@ -1,11 +1,12 @@
 import React, { createContext, useState, useContext } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import { VideoData, VideoSegment } from '../types';
+
+// Backend base URL
+const BACKEND = 'http://127.0.0.1:8000';
 
 interface VideoContextType {
   originalVideo: VideoData | null;
   videoSegments: VideoSegment[];
-  setOriginalVideo: (video: VideoData) => void;
   processVideo: (videoFile: File) => Promise<void>;
   clearVideos: () => void;
 }
@@ -16,83 +17,41 @@ export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [originalVideo, setOriginalVideo] = useState<VideoData | null>(null);
   const [videoSegments, setVideoSegments] = useState<VideoSegment[]>([]);
 
-  // This function simulates processing by a backend
-  // In a real app, this would send the video to a backend service
+  // Send the video file to the backend for processing
   const processVideo = async (videoFile: File): Promise<void> => {
-    // Create URL for the original video
-    const videoUrl = URL.createObjectURL(videoFile);
-    
-    // Set the original video data
-    const newOriginalVideo: VideoData = {
-      id: uuidv4(),
-      name: videoFile.name,
-      url: videoUrl,
-      thumbnailUrl: videoUrl, // In a real app, we'd generate a thumbnail
-      duration: 0, // In a real app, we'd calculate this
-      createdAt: new Date().toISOString(),
-    };
-    
-    setOriginalVideo(newOriginalVideo);
-    
-    // Simulate creating 5 video segments with random correctness status
-    // In a real app, these would be created by the backend
-    // Send to backend for real processing
     const form = new FormData();
     form.append('video', videoFile);
 
     try {
-      const BACKEND = 'http://127.0.0.1:8000';
-
       const res = await fetch(`${BACKEND}/api/process-video`, {
         method: 'POST',
-        body: form
+        body: form,
       });
       if (!res.ok) {
         const err = await res.text();
         throw new Error(err || res.statusText);
       }
-      const data = await res.json();
 
-      // originalVideo comes with { url, thumbnailUrl }
-      setOriginalVideo({
-        id: uuidv4(),
-        ...data.originalVideo,
-      });
+      const data: {
+        originalVideo: VideoData;
+        videoSegments: VideoSegment[];
+      } = await res.json();
 
-      // videoSegments is an array of { id, segmentNumber, url, thumbnailUrl, startTime, endTime }
+      setOriginalVideo(data.originalVideo);
       setVideoSegments(data.videoSegments);
     } catch (e) {
-      console.error('Video processing failed:', e);
+      console.error('Error processing video:', e);
       throw e;
     }
   };
 
   const clearVideos = () => {
-    if (originalVideo) {
-      URL.revokeObjectURL(originalVideo.url);
-    }
-    
-    videoSegments.forEach(segment => {
-      // Only revoke if it's a different URL than the original
-      if (segment.url !== originalVideo?.url) {
-        URL.revokeObjectURL(segment.url);
-      }
-    });
-    
     setOriginalVideo(null);
     setVideoSegments([]);
   };
 
   return (
-    <VideoContext.Provider 
-      value={{ 
-        originalVideo, 
-        videoSegments, 
-        setOriginalVideo, 
-        processVideo,
-        clearVideos
-      }}
-    >
+    <VideoContext.Provider value={{ originalVideo, videoSegments, processVideo, clearVideos }}>
       {children}
     </VideoContext.Provider>
   );
@@ -100,7 +59,7 @@ export const VideoProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
 export const useVideo = (): VideoContextType => {
   const context = useContext(VideoContext);
-  if (context === undefined) {
+  if (!context) {
     throw new Error('useVideo must be used within a VideoProvider');
   }
   return context;
