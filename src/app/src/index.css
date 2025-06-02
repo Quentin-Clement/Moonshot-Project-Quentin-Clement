@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Define CSS variables for ease of use */
+:root {
+  --safe-top: env(safe-area-inset-top);
+  --safe-bottom: env(safe-area-inset-bottom);
+}
+
+/* Apply to the very root of your app */
+body, #root {
+  padding-top: var(--safe-top);
+  padding-bottom: var(--safe-bottom);
+  /* ensure full viewport height */
+  min-height: 100vh;
+  box-sizing: border-box;
+}

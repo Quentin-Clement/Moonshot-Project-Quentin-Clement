@@ -2,7 +2,7 @@ import React, { createContext, useState, useContext } from 'react';
 import { VideoData, VideoSegment } from '../types';
 
 // Backend base URL
-const BACKEND = 'http://127.0.0.1:8000';
+const BACKEND = 'https://liftguard-454389801374.europe-west9.run.app';
 
 interface VideoContextType {
   originalVideo: VideoData | null;

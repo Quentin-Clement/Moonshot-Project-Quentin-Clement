@@ -12,8 +12,18 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   const isSavedPage = location.pathname === '/saved';
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
+    // Apply global safe-area padding for notch and home indicator
+    <div
+      className="min-h-screen bg-slate-50 flex flex-col"
+      style={{
+        paddingTop: 'env(safe-area-inset-top)',
+        paddingBottom: 'env(safe-area-inset-bottom)',
+      }}
+    >
+      <header
+        className="bg-white shadow-sm fixed top-0 left-0 right-0 z-50"
+        style={{ paddingTop: 'env(safe-area-inset-top)' }}
+      >
         <div className="px-4 py-3 flex justify-between items-center max-w-lg mx-auto">
           <Link to="/" className="flex items-center space-x-2 text-blue-600">
             <Dumbbell size={24} />
@@ -30,8 +40,8 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </Link>
             )}
             {!isHomePage && (
-              <Link 
-                to="/" 
+              <Link
+                to="/"
                 className="px-3 py-1.5 text-sm rounded-full bg-blue-600 text-white active:bg-blue-700 transition-colors"
               >
                 New Analysis
@@ -45,7 +55,10 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         {children}
       </main>
       
-      <footer className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-4 text-center text-xs text-slate-500">
+      <footer
+        className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-4 text-center text-xs text-slate-500"
+        style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+      >
         <p>© {new Date().getFullYear()} SquatPro Analyzer</p>
       </footer>
     </div>
