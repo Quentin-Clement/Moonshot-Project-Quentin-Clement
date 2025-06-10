@@ -5,7 +5,7 @@ import { useVideo } from '../context/VideoContext';
 import VideoPlayer from '../components/VideoPlayer';
 import VideoSegment from '../components/VideoSegment';
 
-const BACKEND = 'http://127.0.0.1:8000';
+const BACKEND = 'https://liftguard-454389801374.europe-west9.run.app';
 
 const ResultsPage: React.FC = () => {
   // grab the analyzed video and computed segments from context

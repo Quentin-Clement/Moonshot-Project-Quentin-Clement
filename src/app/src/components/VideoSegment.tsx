@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { VideoSegment as VideoSegmentType } from '../types';
 
-const BACKEND = 'http://127.0.0.1:8000';
+const BACKEND = 'https://liftguard-454389801374.europe-west9.run.app';
 
 interface VideoSegmentProps {
   segment: VideoSegmentType;
