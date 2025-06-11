@@ -11,6 +11,7 @@ from gesture_detection import (
     are_knees_over_toes,
 )
 from process_frame import process_frame
+from agent import get_feedback_for_rep
 
 
 def process_video(input_path: str, output_dir: str) -> dict:
@@ -111,6 +112,14 @@ def process_video(input_path: str, output_dir: str) -> dict:
         cap_an.release()
 
         is_correct = depth_ok and knees_ok and toes_ok
+
+        tips = get_feedback_for_rep(
+            idx,
+            depth_ok,
+            knees_ok,
+            toes_ok
+        )
+
         # For future detail, include individual checks
         segments.append({
             'id': str(uuid4()),
@@ -122,7 +131,8 @@ def process_video(input_path: str, output_dir: str) -> dict:
             'isCorrect': is_correct,
             'depth_ok': depth_ok,
             'knees_ok': knees_ok,
-            'toes_ok': toes_ok
+            'toes_ok': toes_ok,
+            'tips': tips
         })
 
     cap.release()

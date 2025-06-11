@@ -93,9 +93,6 @@ def is_depth_sufficient(results):
     hips_height = ((left_hip.y + right_hip.y) / 2) + 0.05  # Subtract a small value to allow for some margin
     knees_height = (left_knee.y + right_knee.y) / 2
     
-    # Debug print to compare hip and knee heights
-    print(f"Hips height: {hips_height}, Knees height: {knees_height}, Depth sufficient: {hips_height > knees_height}")
-    
     return hips_height > knees_height
 
 def is_knee_cave(results):
@@ -108,9 +105,6 @@ def is_knee_cave(results):
     hips_width = abs(left_hip.x - right_hip.x) + 0.05
     knees_width = abs(left_knee.x - right_knee.x)
     ankles_width = abs(left_ankle.x - right_ankle.x)
-    
-    # Debug print to check knee cave conditions
-    print(f"Hips width: {hips_width}, Knees width: {knees_width}, Ankles width: {ankles_width}, Knee cave: {knees_width < hips_width and knees_width < ankles_width}")
     
     return knees_width < hips_width and knees_width < ankles_width
 

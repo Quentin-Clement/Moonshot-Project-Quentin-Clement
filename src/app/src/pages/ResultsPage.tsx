@@ -17,14 +17,15 @@ const ResultsPage: React.FC = () => {
     if (!originalVideo) navigate('/');
   }, [originalVideo, navigate]);
 
+  // DEBUG: log each segment’s correctness flags
   useEffect(() => {
-    // DEBUG: log each segment’s correctness flags
     videoSegments.forEach(segment => {
       console.log(
         `Segment ${segment.segmentNumber}: ` +
         `depth_ok=${segment.depth_ok}, ` +
         `knees_ok=${segment.knees_ok}, ` +
-        `toes_ok=${segment.toes_ok}`
+        `toes_ok=${segment.toes_ok}, ` +
+        `tips=${JSON.stringify(segment.tips)}`
       );
     });
   }, [videoSegments]);
@@ -97,14 +98,22 @@ const ResultsPage: React.FC = () => {
       {/* Detailed Breakdown Section: render each segment in a 3-column grid */}
       <div>
         <h2 className="text-lg font-semibold mb-2">Detailed Breakdown</h2>
-        {/* grid-cols-3 creates three items per row; adjust at different breakpoints as needed */}
         <div className="grid grid-cols-3 md:grid-cols-6 lg:grid-cols-9 gap-4">
           {videoSegments.map((segment) => (
-            // pass each segment to the VideoSegment component
             <VideoSegment key={segment.id} segment={segment}/>
           ))}
         </div>
       </div>
+
+      {/* DEBUG: Print raw JSON for all segments */}
+      {videoSegments.length > 0 && (
+        <section className="mt-8">
+          <h2 className="text-lg font-semibold mb-2">Raw Segment JSON</h2>
+          <pre className="p-4 bg-gray-100 rounded overflow-auto text-sm max-h-96">
+            {JSON.stringify(videoSegments, null, 2)}
+          </pre>
+        </section>
+      )}
     </div>
   );
 };
