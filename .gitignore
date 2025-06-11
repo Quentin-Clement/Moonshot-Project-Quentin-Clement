@@ -13,5 +13,24 @@ Podfile.lock
 Carthage/Checkouts
 Carthage/Build
 
-# Virtual environments
+# Python virtual environments
 venv/
+env/
+.venv/
+.env/
+ENV/
+pythonenv*/
+.Python
+__pycache__/
+
+# Video files
+*.mp4
+
+# Image files
+*.jpg
+*.jpeg
+*.png
+
+# Docker
+Dockerfile
+requirements.txt
