@@ -1,22 +1,29 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { VideoSegment as VideoSegmentType } from '../types';
-import VideoPlayer from './VideoPlayer';
+
+const BACKEND = 'https://liftguard-454389801374.europe-west9.run.app';
 
 interface VideoSegmentProps {
   segment: VideoSegmentType;
 }
 
-const VideoSegment: React.FC<VideoSegmentProps> = ({ segment }) => {
+export default function VideoSegment({ segment }: VideoSegmentProps) {
+  const { id, thumbnailUrl, isCorrect } = segment;
+  const badgeClasses = isCorrect
+    ? 'bg-green-500 text-white'
+    : 'bg-red-500 text-white';
+
   return (
-    <Link to={`/segment/${segment.id}`} className="block">
-      <div className="bg-white rounded-2xl shadow-sm overflow-hidden active:opacity-90 transitiƒ-opacity">
+    <Link to={`/segment/${id}`} className="block">
+      <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         <div className="relative">
-          <VideoPlayer
-            src={segment.url}
-            thumbnailUrl={segment.thumbnailUrl}
-            autoPlay={false}
+          <img
+            src={`${BACKEND}${thumbnailUrl}`}
+            alt={`Segment ${id}`}
+            className="w-full h-auto"
           />
+
           <span className="absolute top-2 left-2 bg-slate-800 text-white text-xs font-semibold px-2 py-1 rounded-full">
             {segment.segmentNumber}
           </span>
@@ -28,18 +35,7 @@ const VideoSegment: React.FC<VideoSegmentProps> = ({ segment }) => {
             {segment.isCorrect ? 'Correct' : 'Incorrect'}
           </span>
         </div>
-        
-        <div className="p-4">
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-base font-semibold">Phase {segment.segmentNumber}</h3>
-          </div>
-          <p className="text-sm text-slate-600 line-clamp-2">
-            {segment.feedback}
-          </p>
-        </div>
       </div>
     </Link>
   );
-};
-
-export default VideoSegment;
+}

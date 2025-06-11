@@ -20,4 +20,6 @@ export interface VideoSegment {
   depth_ok: boolean;
   knees_ok: boolean;
   toes_ok: boolean;
+
+  tips: string;
 }

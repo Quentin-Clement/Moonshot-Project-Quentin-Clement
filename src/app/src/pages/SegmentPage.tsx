@@ -4,13 +4,15 @@ import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
 import { useVideo } from '../context/VideoContext';
 import VideoPlayer from '../components/VideoPlayer';
 
+const BACKEND = 'https://liftguard-454389801374.europe-west9.run.app';
+
 const SegmentPage: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { videoSegments } = useVideo();
-  
+
   const segment = videoSegments.find(s => s.id === id);
-  
+
   if (!segment) {
     return (
       <div className="p-4">
@@ -52,7 +54,7 @@ const SegmentPage: React.FC = () => {
 
       <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
         <VideoPlayer
-          src={segment.url}
+          src={`${BACKEND}${segment.url}`}
           thumbnailUrl={segment.thumbnailUrl}
           autoPlay={false}
         />
@@ -60,7 +62,7 @@ const SegmentPage: React.FC = () => {
 
       <div className="space-y-4">
         <h2 className="text-lg font-semibold px-1">Form Analysis</h2>
-        
+
         <Parameter
           label="Squat Depth"
           isCorrect={segment.depth_ok}
@@ -70,7 +72,7 @@ const SegmentPage: React.FC = () => {
               : "Insufficient depth. Try to lower your hips below parallel with your knees."
           }
         />
-        
+
         <Parameter
           label="Knee Alignment"
           isCorrect={segment.knees_ok}
@@ -80,7 +82,7 @@ const SegmentPage: React.FC = () => {
               : "Knees are caving inward. Focus on pushing them outward in line with your toes."
           }
         />
-        
+
         <Parameter
           label="Foot Position"
           isCorrect={segment.toes_ok}
@@ -96,23 +98,8 @@ const SegmentPage: React.FC = () => {
         <h2 className="text-lg font-semibold mb-3">AI Feedback</h2>
         <div className="prose prose-sm text-slate-600">
           <p className="text-sm leading-relaxed">
-            {segment.isCorrect
-              ? "Great work on this phase of your squat! Your form shows good technical proficiency. Keep maintaining this level of control and precision throughout your workout."
-              : "In this phase, there are a few areas that need attention. Focus on maintaining proper form throughout the movement. Try to perform the movement more slowly and controlled to better maintain proper positioning."}
+            {segment.tips}
           </p>
-          {!segment.isCorrect && (
-            <ul className="mt-3 space-y-2 text-sm">
-              {!segment.depth_ok && (
-                <li>Try using a box or bench as a depth gauge during practice.</li>
-              )}
-              {!segment.knees_ok && (
-                <li>Practice with a resistance band around your knees to reinforce proper alignment.</li>
-              )}
-              {!segment.toes_ok && (
-                <li>Consider placing small plates under your heels to work on ankle mobility.</li>
-              )}
-            </ul>
-          )}
         </div>
       </div>
     </div>
