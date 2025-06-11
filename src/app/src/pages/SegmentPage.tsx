@@ -4,7 +4,8 @@ import { ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
 import { useVideo } from '../context/VideoContext';
 import VideoPlayer from '../components/VideoPlayer';
 
-const BACKEND = 'https://liftguard-454389801374.europe-west9.run.app';
+// Backend URL defined in .env file
+const BACKEND = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000';
 
 const SegmentPage: React.FC = () => {
   const { id } = useParams();

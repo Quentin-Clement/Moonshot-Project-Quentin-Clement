@@ -5,7 +5,8 @@ import { useVideo } from '../context/VideoContext';
 import VideoPlayer from '../components/VideoPlayer';
 import VideoSegment from '../components/VideoSegment';
 
-const BACKEND = 'https://liftguard-454389801374.europe-west9.run.app';
+// Backend URL defined in .env file
+const BACKEND = process.env.REACT_APP_BACKEND_URL || 'http://127.0.0.1:8000';
 
 const ResultsPage: React.FC = () => {
   // grab the analyzed video and computed segments from context
@@ -104,16 +105,6 @@ const ResultsPage: React.FC = () => {
           ))}
         </div>
       </div>
-
-      {/* DEBUG: Print raw JSON for all segments */}
-      {videoSegments.length > 0 && (
-        <section className="mt-8">
-          <h2 className="text-lg font-semibold mb-2">Raw Segment JSON</h2>
-          <pre className="p-4 bg-gray-100 rounded overflow-auto text-sm max-h-96">
-            {JSON.stringify(videoSegments, null, 2)}
-          </pre>
-        </section>
-      )}
     </div>
   );
 };
