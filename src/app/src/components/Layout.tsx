@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dumbbell, History } from 'lucide-react';
+import { Dumbbell } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 interface LayoutProps {
@@ -9,7 +9,6 @@ interface LayoutProps {
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   const location = useLocation();
   const isHomePage = location.pathname === '/';
-  const isSavedPage = location.pathname === '/saved';
 
   return (
     // Apply global safe-area padding for notch and home indicator
@@ -27,27 +26,9 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         <div className="px-4 py-3 flex justify-between items-center max-w-lg mx-auto">
           <Link to="/" className="flex items-center space-x-2 text-blue-600">
             <Dumbbell size={24} />
-            <span className="text-lg font-bold">SquatPro</span>
+            <span className="text-lg font-bold">LiftGuard</span>
           </Link>
-          <div className="flex items-center gap-2">
-            {!isSavedPage && (
-              <Link
-                to="/saved"
-                className="p-2 rounded-full bg-slate-100 active:bg-slate-200 transition-colors"
-                aria-label="View saved analyses"
-              >
-                <History size={20} />
-              </Link>
-            )}
-            {!isHomePage && (
-              <Link
-                to="/"
-                className="px-3 py-1.5 text-sm rounded-full bg-blue-600 text-white active:bg-blue-700 transition-colors"
-              >
-                New Analysis
-              </Link>
-            )}
-          </div>
+          {/* Removed the save/new-analysis button */}
         </div>
       </header>
       
@@ -59,7 +40,7 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
         className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 py-2 px-4 text-center text-xs text-slate-500"
         style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
       >
-        <p>© {new Date().getFullYear()} SquatPro Analyzer</p>
+        <p>© {new Date().getFullYear()} LiftGuard</p>
       </footer>
     </div>
   );
