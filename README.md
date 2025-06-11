@@ -12,8 +12,8 @@
 ## Technologies used
 
 **LiftGuard** is a mix of 2 main technologies: 
-- <img src="./documents/images/logos/flutter-logo.png" alt="Icon" style="width: 20px; height: 20px; vertical-align: middle;"> Flutter for the mobile app part and <img src="./documents/images/logos/firebase-logo.png" alt="Icon" style="width: 20px; height: 20px; vertical-align: middle;"> Firebase for the backend part.
-- <img src="./documents/images/logos/python-logo.png" alt="Icon" style="width: 20px; height: 20px; vertical-align: middle;"> Python 3 and  <img src="./documents/images/logos/tensorflow-logo.png" alt="Icon" style="width: 20px; height: 20px; vertical-align: middle;"> TensorFlow for the machine learning part.
+- React and Capacitor as a front-end.
+- Python, Uvicorn, and Google Cloud Run as a back-end.
 
 ## Contact
 
