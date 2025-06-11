@@ -1,0 +1,24 @@
+name: app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.6.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  http: ^0.13.4
+  camera: ^0.11.1
+  web_socket_channel: ^3.0.2
+  go_router: ^14.1.2
+  path_provider: ^2.0.2
+  flutter_riverpod: ^2.5.1
+
+flutter:
+  uses-material-design: true
